@@ -1,3 +1,8 @@
+Flutter Anleitung:
+
+https://www.zeromolecule.com/blog/host-card-emulation-hce-with-android-and-flutter/
+
+
 Reader Suche
 
 RFID Karten: https://www.conrad.de/de/p/tru-components-tc-9927212-rfid-karte-10-st-2481803.html
