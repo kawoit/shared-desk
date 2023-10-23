@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Desk</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .seat {
+        background-color: lightblue;
+        border: 1px black solid;
+      }
+      #room {
+        display: flex;
+        flex-wrap: wrap;
+        width: fit-content;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="room">
+      <div class="seat">
+        <div
+          style="
+            width: 100px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div
+            class="table"
+            style="
+              border: 1px black solid;
+              width: 80%;
+              background-color: burlywood;
+              flex-grow: 1;
+            "
+          ></div>
+          <div
+            class="chair"
+            style="
+              border: 1px black solid;
+              border-radius: 100%;
+              width: 1.5em;
+              height: 1.5em;
+              background-color: blanchedalmond;
+            "
+          ></div>
+        </div>
+      </div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+    </div>
+  </body>
+</html>
+<script>
+  var seats = document.getElementsByClassName("seat");
+  for (let seat of seats) {
+  }
+</script>

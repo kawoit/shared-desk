@@ -1,4 +1,6 @@
 var bodyElement = document.getElementsByTagName("body")[0];
+var title = "Shared Desk";
+document.title = title;
 
 function Header() {
   let headerDiv = document.createElement("div");
@@ -10,7 +12,7 @@ function Header() {
   let burgerBorder = document.createElement("div");
   burgerBorder.className = "burgerBorder";
   burgerBorder.addEventListener("click", () => {
-    alert("Hello");
+    alert("TODO implement BurgerMenu");
   });
   burgerMenu.appendChild(burgerBorder);
   let burgerImage = document.createElement("img");
@@ -19,7 +21,7 @@ function Header() {
   burgerBorder.appendChild(burgerImage);
 
   let headerText = document.createElement("div");
-  headerText.innerHTML = "Smart Desks";
+  headerText.innerHTML = title;
   headerText.style.textAlign = "center";
   headerDiv.appendChild(headerText);
 
@@ -37,7 +39,7 @@ function Footer() {
 function Main() {
   let mainDiv = document.createElement("div");
 
-  let room = populateRoom(9);
+  let room = populateRoom(5, 2);
   room.id = "room";
 
   mainDiv.appendChild(room);
@@ -49,17 +51,47 @@ Header();
 Main();
 Footer();
 
-function populateRoom(seats) {
+function populateRoom(rows, columns) {
   let result = document.createElement("div");
   result.id = "room";
-  // let columns = Math.sqrt(seats);
-  // result.style.columnCount = columns;
-  for (let i = 0; i < seats; i++) {
-    let seatDiv = document.createElement("div");
-    seatDiv.className = "seat " + i;
-    let column = (i % 3) + 1;
-    seatDiv.style.gridColumn = column;
-    result.appendChild(seatDiv);
+  let amountDesks = rows * columns;
+
+  for (let currRow = 1; currRow <= rows; currRow++) {
+    for (let currCol = 1; currCol <= columns; currCol++) {
+      let deskDiv = document.createElement("div");
+      deskDiv.className = "deskDiv";
+      deskDiv.dataset.x = currRow;
+      deskDiv.dataset.y = currCol;
+      deskDiv.dataset.reserved = false;
+      deskDiv.style.gridColumn = currCol;
+      deskDiv.addEventListener("click", function () {
+        if (deskDiv.dataset.reserved === "false") {
+          deskDiv.dataset.reserved = true;
+          deskDiv.style.backgroundColor = "red";
+        } else {
+          deskDiv.dataset.reserved = false;
+          deskDiv.style.backgroundColor = "green";
+        }
+      });
+
+      let desk = createDeskGraphic();
+
+      deskDiv.appendChild(desk);
+      result.appendChild(deskDiv);
+    }
   }
   return result;
+}
+
+function createDeskGraphic() {
+  let desk = document.createElement("div");
+  desk.className = "desk";
+  let table = document.createElement("div");
+  table.className = "table";
+  let chair = document.createElement("div");
+  chair.className = "chair";
+  desk.appendChild(table);
+  desk.appendChild(chair);
+
+  return desk;
 }
