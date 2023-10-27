@@ -3,67 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Desk</title>
-    <link rel="stylesheet" href="styles.css" />
-    <style>
-      .seat {
-        background-color: lightblue;
-        border: 1px black solid;
-      }
-      #room {
-        display: flex;
-        flex-wrap: wrap;
-        width: fit-content;
-      }
-    </style>
+    <title>Document</title>
   </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      display: flex;
+    }
+
+    .main {
+      background-color: lightgreen;
+    }
+    #NavMenu {
+      height: 80vh;
+      width: 0%;
+      background-color: lightblue;
+    }
+    #open {
+      width: 50px;
+      height: 50px;
+    }
+  </style>
   <body>
-    <div id="room">
-      <div class="seat">
-        <div
-          style="
-            width: 100px;
-            height: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <div
-            class="table"
-            style="
-              border: 1px black solid;
-              width: 80%;
-              background-color: burlywood;
-              flex-grow: 1;
-            "
-          ></div>
-          <div
-            class="chair"
-            style="
-              border: 1px black solid;
-              border-radius: 100%;
-              width: 1.5em;
-              height: 1.5em;
-              background-color: blanchedalmond;
-            "
-          ></div>
-        </div>
-      </div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
+    <div class="container"></div>
+    <button id="open">Menu</button>
   </body>
 </html>
 <script>
-  var seats = document.getElementsByClassName("seat");
-  for (let seat of seats) {
+  var container = document.getElementsByClassName("container")[0];
+  var clicked = false;
+
+  document.getElementById("open").addEventListener("click", () => {
+    if (clicked == false) {
+      document.getElementById("NavMenu").style.width = "50%";
+      clicked = true;
+    } else {
+      document.getElementById("NavMenu").style.width = "0%";
+      clicked = false;
+    }
+  });
+
+  function Nav(HTMLelement) {
+    let NavTitle = document.createElement("div");
+    NavTitle.innerHTML = "Navigation";
+    let Navigation = document.createElement("NavMenu");
+    Navigation.id = "NavMenu";
+    Navigation.appendChild(NavTitle);
+
+    HTMLelement.appendChild(Navigation);
   }
+
+  Nav(container);
+  let main = document.createElement("div");
+  main.className = "main";
+  main.innerHTML =
+    "    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eos quos    voluptatem autem magni officiis mollitia suscipit officia perferendis sequi possimus, a, neque dicta facere blanditiis vero? Aspernatur, nam odio";
+  container.appendChild(main);
 </script>

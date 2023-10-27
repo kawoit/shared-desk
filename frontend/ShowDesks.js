@@ -1,29 +1,32 @@
 var bodyElement = document.getElementsByTagName("body")[0];
 var title = "Shared Desk";
+var desks = [];
+var NavmenuOpen = false;
 document.title = title;
 
 function Header() {
   let headerDiv = document.createElement("div");
   headerDiv.id = "header";
+  let headerContainer = document.createElement("div");
+  headerContainer.id = "headerContainer";
+  headerDiv.appendChild(headerContainer);
+
+  let headerText = document.createElement("div");
+  headerText.innerHTML = title;
+  headerText.style.textAlign = "center";
+  headerContainer.appendChild(headerText);
 
   let burgerMenu = document.createElement("div");
   burgerMenu.className = "burgerMenu";
-  headerDiv.appendChild(burgerMenu);
+  headerContainer.appendChild(burgerMenu);
   let burgerBorder = document.createElement("div");
   burgerBorder.className = "burgerBorder";
-  burgerBorder.addEventListener("click", () => {
-    alert("TODO implement BurgerMenu");
-  });
+  burgerBorder.addEventListener("click", NavigationMenu);
   burgerMenu.appendChild(burgerBorder);
   let burgerImage = document.createElement("img");
   burgerImage.src = "Icons/BurgerMenuIcon.png";
   burgerImage.className = "burgerMenuIcon";
   burgerBorder.appendChild(burgerImage);
-
-  let headerText = document.createElement("div");
-  headerText.innerHTML = title;
-  headerText.style.textAlign = "center";
-  headerDiv.appendChild(headerText);
 
   bodyElement.appendChild(headerDiv);
 }
@@ -38,6 +41,8 @@ function Footer() {
 
 function Main() {
   let mainDiv = document.createElement("div");
+  mainDiv.id = "main";
+  Nav(mainDiv);
 
   let room = populateRoom(5, 2);
   room.id = "room";
@@ -47,11 +52,28 @@ function Main() {
   bodyElement.appendChild(mainDiv);
 }
 
+function Nav(HTMLelement) {
+  let NavTitle = document.createElement("div");
+  NavTitle.innerHTML = "Navigation";
+  let Navigation = document.createElement("NavMenu");
+  Navigation.id = "NavMenu";
+  Navigation.appendChild(NavTitle);
+  room = ["Raum1", "Raum2"];
+  for (let i of room) {
+    let NavElement = document.createElement("div");
+    NavElement.innerHTML = i;
+    Navigation.appendChild(NavElement);
+  }
+
+  HTMLelement.appendChild(Navigation);
+}
+
 Header();
 Main();
 Footer();
 
 function populateRoom(rows, columns) {
+  desk = [];
   let result = document.createElement("div");
   result.id = "room";
   let amountDesks = rows * columns;
@@ -78,6 +100,7 @@ function populateRoom(rows, columns) {
 
       deskDiv.appendChild(desk);
       result.appendChild(deskDiv);
+      desks.push({ currRow, currCol, reserved: 0 });
     }
   }
   return result;
@@ -94,4 +117,30 @@ function createDeskGraphic() {
   desk.appendChild(chair);
 
   return desk;
+}
+
+async function NavigationMenu() {
+  let duration = 40;
+  var NavMenu = document.getElementById("NavMenu");
+  NavMenu.style.width = "fit-content";
+  let NavMenuWidth = NavMenu.offsetWidth;
+  NavMenu.style.width = 0;
+
+  if (NavmenuOpen == false) {
+    NavmenuOpen = true;
+    for (let index = 0; index <= duration; index++) {
+      NavMenu.style.width = NavMenuWidth * (index / duration) + "px";
+      await Sleep(1);
+    }
+  } else {
+    NavmenuOpen = false;
+    for (let index = duration; index >= 0; index--) {
+      NavMenu.style.width = NavMenuWidth * (index / duration) + "px";
+      await Sleep(1);
+    }
+  }
+}
+
+async function Sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
