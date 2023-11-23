@@ -1,4 +1,5 @@
 var bodyElement = document.getElementsByTagName("body")[0];
+var menuVisible = false;
 
 function Header() {
   let headerDiv = document.createElement("div");
@@ -10,7 +11,7 @@ function Header() {
   let burgerBorder = document.createElement("div");
   burgerBorder.className = "burgerBorder";
   burgerBorder.addEventListener("click", () => {
-    add_desk_popup();
+    burgerMenu_click();
   });
   burgerMenu.appendChild(burgerBorder);
   let burgerImage = document.createElement("img");
@@ -36,27 +37,29 @@ function Footer() {
 
 function Main() {
   let mainDiv = document.createElement("div");
+  mainDiv.id = "main";
+  Nav(mainDiv);
 
   // get number of desks from desks variable
   // value: 1,Desk 1,1,2,Desk 2,1,3,Desk 3,0,4,Desk 1,0,5,Desk 2,0,6,Desk 3,0
   // split by comma
   // get length of array
 
-  let desks = python_desks_to_js();
-  
+  // let desks = python_desks_to_js();
+
   // Debug for Willy
-  // let desks = [
-  //   ["1", "Desk 1", "1"],
-  //   ["2", "Desk 2", "1"],
-  //   ["3", "Desk 3", "0"],
-  //   ["4", "Desk 4", "1"],
-  //   ["5", "Desk 5", "0"],
-  //   ["6", "Desk 6", "1"],
-  //   ["7", "Desk 7", "0"],
-  //   ["8", "Desk 8", "1"],
-  //   ["9", "Desk 9", "1"],
-  //   ["10", "Desk 10", "1"],
-  // ];
+  let desks = [
+    ["1", "Desk 1", "1"],
+    ["2", "Desk 2", "1"],
+    ["3", "Desk 3", "0"],
+    ["4", "Desk 4", "1"],
+    ["5", "Desk 5", "0"],
+    ["6", "Desk 6", "1"],
+    ["7", "Desk 7", "0"],
+    ["8", "Desk 8", "1"],
+    ["9", "Desk 9", "1"],
+    ["10", "Desk 10", "1"],
+  ];
   let room = populateRoom(desks);
   room.id = "room";
 
@@ -147,44 +150,77 @@ function generate_desk_view(desk, i) {
   return seatDiv;
 }
 
+function Sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
 // popup to add new desk
-function add_desk_popup() {
-  let popup = document.createElement("div");
-  popup.className = "popup";
-  popup.id = "popup";
-  let popupContent = document.createElement("div");
-  popupContent.className = "popupContent";
-  popup.appendChild(popupContent);
-  let popupHeader = document.createElement("div");
-  popupHeader.className = "popupHeader";
-  popupHeader.innerHTML = "Add new desk";
-  popupContent.appendChild(popupHeader);
-  let popupBody = document.createElement("div");
-  popupBody.className = "popupBody";
-  popupBody.innerHTML = "Enter desk name:";
-  popupContent.appendChild(popupBody);
-  let popupInput = document.createElement("input");
-  popupInput.className = "popupInput";
-  popupInput.id = "popupInput";
-  popupContent.appendChild(popupInput);
-  let popupFooter = document.createElement("div");
-  popupFooter.className = "popupFooter";
-  popupContent.appendChild(popupFooter);
-  let popupButton = document.createElement("button");
-  popupButton.className = "popupButton";
-  popupButton.innerHTML = "Add";
-  popupButton.addEventListener("click", () => {
-    let deskName = document.getElementById("popupInput").value;
-    console.log(deskName);
-    window.location.href = "/add_desk/" + deskName;
-  });
-  popupFooter.appendChild(popupButton);
-  let popupButton2 = document.createElement("button");
-  popupButton2.className = "popupButton";
-  popupButton2.innerHTML = "Cancel";
-  popupButton2.addEventListener("click", () => {
-    document.getElementById("popup").remove();
-  });
-  popupFooter.appendChild(popupButton2);
-  bodyElement.appendChild(popup);
+async function burgerMenu_click() {
+  let duration = 30;
+  let maxOpacity = 0.8;
+  let menu = document.getElementById("menu");
+
+  if (menuVisible) {
+    for (let i = duration; i > 0; i--) {
+      menu.style.opacity = (maxOpacity / duration) * i;
+      await Sleep(1);
+    }
+    menu.style.opacity = 0;
+    menu.style.visibility = "hidden";
+    menuVisible = !menuVisible;
+  } else {
+    menu.style.visibility = "visible";
+    for (let i = 0; i < duration; i++) {
+      let menu = document.getElementById("menu");
+      menu.style.opacity = (maxOpacity / duration) * i;
+      await Sleep(1);
+    }
+    menu.style.opacity = maxOpacity;
+    menuVisible = !menuVisible;
+  }
+}
+
+function Nav(main) {
+  let menu = document.createElement("div");
+  menu.id = "menu";
+
+  let addDeskDiv = document.createElement("div");
+  addDeskDiv.className = "menuItem";
+  let addDeskDivLabel = document.createElement("div");
+  addDeskDivLabel.className = "label";
+  addDeskDivLabel.innerHTML = "Add new desk";
+
+  addDeskDiv.appendChild(addDeskDivLabel);
+  menu.appendChild(addDeskDiv);
+  // popupContent.appendChild(addDeskDivLabel);
+  // let popupBody = document.createElement("div");
+  // popupBody.className = "popupBody";
+  // popupBody.innerHTML = "Enter desk name:";
+  // popupContent.appendChild(popupBody);
+  // let popupInput = document.createElement("input");
+  // popupInput.className = "popupInput";
+  // popupInput.id = "popupInput";
+  // popupContent.appendChild(popupInput);
+  // let popupFooter = document.createElement("div");
+  // popupFooter.className = "popupFooter";
+  // popupContent.appendChild(popupFooter);
+  // let popupButton = document.createElement("button");
+  // popupButton.className = "popupButton";
+  // popupButton.innerHTML = "Add";
+  // popupButton.addEventListener("click", () => {
+  //   let deskName = document.getElementById("popupInput").value;
+  //   console.log(deskName);
+  //   window.location.href = "/add_desk/" + deskName;
+  // });
+  // popupFooter.appendChild(popupButton);
+  // let popupButton2 = document.createElement("button");
+  // popupButton2.className = "popupButton";
+  // popupButton2.innerHTML = "Cancel";
+  // popupButton2.addEventListener("click", () => {
+  //   document.getElementById("popup").remove();
+  // });
+  // popupFooter.appendChild(popupButton2);
+  // bodyElement.appendChild(popup);
+
+  main.appendChild(menu);
 }

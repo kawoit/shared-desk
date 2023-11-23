@@ -11,6 +11,7 @@
 }
 
 #header {
+  z-index: 1000;
   position: sticky;
   top: 0;
   display: flex;
@@ -55,6 +56,34 @@
   height: calc(var(--headerHeight) / 2);
 }
 
+#main {
+  position: relative;
+}
+
+#menu {
+  z-index: 999;
+  width: 100vw;
+  height: 80vh;
+  background-color: black;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  padding: 1em;
+}
+
+.menuItem {
+  display: flex;
+}
+
+.label {
+  width: fit-content;
+  background-color: #fff;
+  opacity: 1;
+  border-radius: 20%;
+  border: white 1px solid;
+  padding: 0.5em;
+}
+
 #room {
   display: grid;
   align-items: center;
@@ -88,6 +117,6 @@
   border: 1px black solid;
   background-color: gray;
   border-radius: 100%;
-  height: calc((var(--seatHeight)*0.4));
-  width: calc((var(--seatHeight)*0.4));
+  height: calc((var(--seatHeight) * 0.4));
+  width: calc((var(--seatHeight) * 0.4));
 }
