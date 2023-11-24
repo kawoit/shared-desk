@@ -81,15 +81,26 @@ async function populateRoom_update() {
 function populateRoom(desks) {
   let result = document.createElement("div");
   result.id = "room";
+
+  let row = 1;
+  let column = 1;
+  let amountColumns = 2;
   desks.forEach((desk) => {
     let child = generate_desk_view(desk, desks.indexOf(desk));
+    child.style.gridRow = row;
+    child.style.gridColumn = column;
+    if (column % amountColumns == 0) {
+      column = 1;
+      row++;
+    } else {
+      column++;
+    }
     result.appendChild(child);
   });
   return result;
 }
 
 function generate_desk_view(desk, i) {
-  console.log(desk);
   let seatDiv = document.createElement("div");
   seatDiv.id = "seat" + desk["id"];
   seatDiv.innerText = desk["name"];
@@ -98,6 +109,15 @@ function generate_desk_view(desk, i) {
   } else {
     seatDiv.style.backgroundColor = "#26ce00";
   }
+  let seatGraphic = document.createElement("div");
+  seatGraphic.className = "SeatGraphic";
+  let tableGraphic = document.createElement("div");
+  tableGraphic.className = "Table";
+  seatGraphic.appendChild(tableGraphic);
+  let chairGraphic = document.createElement("div");
+  chairGraphic.className = "Chair";
+  seatGraphic.appendChild(chairGraphic);
+  seatDiv.appendChild(seatGraphic);
 
   user = document.createElement("div");
   user.id = "user";
