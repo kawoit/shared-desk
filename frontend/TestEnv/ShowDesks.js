@@ -1,5 +1,41 @@
 var bodyElement = document.getElementsByTagName("body")[0];
 var menuVisible = false;
+var SeatGraphicOpacity = 0.5;
+// Avaiable Rooms
+// TODO implement
+var Rooms = [
+  {
+    name: "Room1",
+    desks: [
+      ["1", "Desk 1 of Room 1", "1"],
+      ["2", "Desk 2 of Room 1", "1"],
+      ["3", "Desk 3 of Room 1", "0"],
+      ["4", "Desk 4 of Room 1", "1"],
+      ["5", "Desk 5 of Room 1", "0"],
+      ["6", "Desk 6 of Room 1", "1"],
+      ["7", "Desk 7 of Room 1", "0"],
+      ["8", "Desk 8 of Room 1", "1"],
+      ["9", "Desk 9 of Room 1", "1"],
+      ["10", "Desk 10 of Room 1", "1"],
+    ],
+  },
+  {
+    name: "Room2",
+    desks: [
+      ["1", "Desk 1 of Room 2", "1"],
+      ["2", "Desk 2 of Room 2", "1"],
+      ["3", "Desk 3 of Room 2", "0"],
+      ["4", "Desk 4 of Room 2", "1"],
+      ["5", "Desk 5 of Room 2", "0"],
+      ["6", "Desk 6 of Room 2", "1"],
+      ["7", "Desk 7 of Room 2", "0"],
+      ["8", "Desk 8 of Room 2", "1"],
+      ["9", "Desk 9 of Room 2", "1"],
+      ["10", "Desk 10 of Room 2", "1"],
+    ],
+  },
+];
+var desks = [];
 
 function Header() {
   let headerDiv = document.createElement("div");
@@ -11,7 +47,7 @@ function Header() {
   let burgerBorder = document.createElement("div");
   burgerBorder.className = "burgerBorder";
   burgerBorder.addEventListener("click", () => {
-    burgerMenu_click();
+    toggleNavMenu();
   });
   burgerMenu.appendChild(burgerBorder);
   let burgerImage = document.createElement("img");
@@ -39,33 +75,15 @@ function Main() {
   let mainDiv = document.createElement("div");
   mainDiv.id = "main";
   Nav(mainDiv);
+  let mainContainer = document.createElement("div");
+  mainContainer.id = "MainContainer";
+  mainDiv.appendChild(mainContainer);
 
+  bodyElement.appendChild(mainDiv);
   // get number of desks from desks variable
   // value: 1,Desk 1,1,2,Desk 2,1,3,Desk 3,0,4,Desk 1,0,5,Desk 2,0,6,Desk 3,0
   // split by comma
   // get length of array
-
-  // let desks = python_desks_to_js();
-
-  // Debug for Willy
-  let desks = [
-    ["1", "Desk 1", "1"],
-    ["2", "Desk 2", "1"],
-    ["3", "Desk 3", "0"],
-    ["4", "Desk 4", "1"],
-    ["5", "Desk 5", "0"],
-    ["6", "Desk 6", "1"],
-    ["7", "Desk 7", "0"],
-    ["8", "Desk 8", "1"],
-    ["9", "Desk 9", "1"],
-    ["10", "Desk 10", "1"],
-  ];
-  let room = populateRoom(desks);
-  room.id = "room";
-
-  mainDiv.appendChild(room);
-
-  bodyElement.appendChild(mainDiv);
 }
 
 Header();
@@ -98,6 +116,7 @@ function raw_array_to_dict_array(raw_array) {
 }
 
 function populateRoom(desks_raw) {
+  let mainContainer = document.getElementById("MainContainer");
   let desks = raw_array_to_dict_array(desks_raw);
   let result = document.createElement("div");
   result.id = "room";
@@ -118,28 +137,30 @@ function populateRoom(desks_raw) {
     result.appendChild(child);
   });
 
-  return result;
+  mainContainer.appendChild(result);
 }
 
 function generate_desk_view(desk, i) {
   let seatDiv = document.createElement("div");
   seatDiv.className = "seat " + desk["id"];
   seatDiv.innerText = desk["name"];
+  seatDiv.addEventListener("click", toggleSeatGraphicVisibility);
   if (desk["is_used"] == 1) {
     seatDiv.style.backgroundColor = "#ff9b7d";
     // set link for seatdiv to /set_free/<desk_id>
-    seatDiv.addEventListener("click", () => {
-      window.location.href = "/set_free/" + desk["id"];
-    });
+    // seatDiv.addEventListener("click", () => {
+    //   window.location.href = "/set_free/" + desk["id"];
+    // });
   } else {
     seatDiv.style.backgroundColor = "#26ce00";
     // set link for seatdiv to /set_in_use/<desk_id>
-    seatDiv.addEventListener("click", () => {
-      window.location.href = "/set_in_use/" + desk["id"];
-    });
+    // seatDiv.addEventListener("click", () => {
+    //   window.location.href = "/set_in_use/" + desk["id"];
+    // });
   }
   let seatGraphic = document.createElement("div");
   seatGraphic.className = "SeatGraphic";
+  seatGraphic.style.opacity = SeatGraphicOpacity;
   let tableGraphic = document.createElement("div");
   tableGraphic.className = "Table";
   seatGraphic.appendChild(tableGraphic);
@@ -154,11 +175,10 @@ function Sleep(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-// popup to add new desk
-async function burgerMenu_click() {
+async function toggleNavMenu() {
   let duration = 30;
-  let maxOpacity = 0.8;
-  let menu = document.getElementById("menu");
+  let maxOpacity = 1;
+  let menu = document.getElementById("NavMenu");
 
   if (menuVisible) {
     for (let i = duration; i > 0; i--) {
@@ -171,7 +191,6 @@ async function burgerMenu_click() {
   } else {
     menu.style.visibility = "visible";
     for (let i = 0; i < duration; i++) {
-      let menu = document.getElementById("menu");
       menu.style.opacity = (maxOpacity / duration) * i;
       await Sleep(1);
     }
@@ -181,46 +200,127 @@ async function burgerMenu_click() {
 }
 
 function Nav(main) {
-  let menu = document.createElement("div");
-  menu.id = "menu";
+  let menu = document.getElementById("NavMenu");
+  if (menu != null) {
+    menu.innerHTML = "";
+  } else {
+    menu = document.createElement("div");
+    menu.id = "NavMenu";
+    main.appendChild(menu);
+  }
 
-  let addDeskDiv = document.createElement("div");
-  addDeskDiv.className = "menuItem";
-  let addDeskDivLabel = document.createElement("div");
-  addDeskDivLabel.className = "label";
-  addDeskDivLabel.innerHTML = "Add new desk";
+  let menuContainer = document.createElement("div");
+  menuContainer.id = "MenuContainer";
+  menu.appendChild(menuContainer);
 
-  addDeskDiv.appendChild(addDeskDivLabel);
-  menu.appendChild(addDeskDiv);
-  // popupContent.appendChild(addDeskDivLabel);
-  // let popupBody = document.createElement("div");
-  // popupBody.className = "popupBody";
-  // popupBody.innerHTML = "Enter desk name:";
-  // popupContent.appendChild(popupBody);
-  // let popupInput = document.createElement("input");
-  // popupInput.className = "popupInput";
-  // popupInput.id = "popupInput";
-  // popupContent.appendChild(popupInput);
-  // let popupFooter = document.createElement("div");
-  // popupFooter.className = "popupFooter";
-  // popupContent.appendChild(popupFooter);
-  // let popupButton = document.createElement("button");
-  // popupButton.className = "popupButton";
-  // popupButton.innerHTML = "Add";
-  // popupButton.addEventListener("click", () => {
-  //   let deskName = document.getElementById("popupInput").value;
-  //   console.log(deskName);
-  //   window.location.href = "/add_desk/" + deskName;
-  // });
-  // popupFooter.appendChild(popupButton);
-  // let popupButton2 = document.createElement("button");
-  // popupButton2.className = "popupButton";
-  // popupButton2.innerHTML = "Cancel";
-  // popupButton2.addEventListener("click", () => {
-  //   document.getElementById("popup").remove();
-  // });
-  // popupFooter.appendChild(popupButton2);
-  // bodyElement.appendChild(popup);
+  let navLabel = document.createElement("div");
+  navLabel.className = "label";
+  navLabel.innerHTML = "Navigation";
+  menuContainer.appendChild(navLabel);
+  let adminViewMenuItem = document.createElement("div");
+  adminViewMenuItem.className = "menuItem";
+  adminViewMenuItem.innerHTML = "Admin View";
+  adminViewMenuItem.addEventListener("click", changetoAdminView);
 
-  main.appendChild(menu);
+  menuContainer.appendChild(adminViewMenuItem);
+
+  let roomLabel = document.createElement("div");
+  roomLabel.className = "label";
+  roomLabel.innerHTML = "Rooms";
+  menuContainer.appendChild(roomLabel);
+
+  for (const room of Rooms) {
+    let roomMenu = document.createElement("div");
+    roomMenu.className = "menuItem";
+    roomMenu.addEventListener("click", () => {
+      toggleNavMenu();
+      let mainContainer = document.getElementById("MainContainer");
+      mainContainer.innerHTML = "";
+      populateRoom(room.desks);
+    });
+    roomMenu.innerHTML = room.name; // TODO Actually implement logic here
+    menuContainer.appendChild(roomMenu);
+  }
+
+  // for (let i = 0; i < 1000; i++) {
+  //   let filler = document.createElement("div");
+  //   filler.className = "menuItem";
+  //   filler.innerHTML = "Placeholder";
+  //   menu.appendChild(filler);
+  // }
 }
+
+function changetoAdminView() {
+  toggleNavMenu();
+  let mainContainer = document.getElementById("MainContainer");
+  mainContainer.innerHTML = "";
+
+  let adminView = document.createElement("div");
+  adminView.id = "AdminView";
+  let adminControls = document.createElement("div");
+  adminControls.id = "AdminControls";
+  let rowInput = document.createElement("input");
+  rowInput.placeholder = "Enter Rows";
+  let columnInput = document.createElement("input");
+  columnInput.placeholder = "Enter Columns";
+  let generateRoomButton = document.createElement("button");
+  generateRoomButton.textContent = "Create Room";
+  generateRoomButton.addEventListener("click", () => {
+    let rowNonNumeric = false;
+    let columnNonNumeric = false;
+
+    if (rowInput.value == "" || columnInput.value == "") {
+      alert("At least one Value is empty.");
+      return;
+    }
+
+    for (const currChar of rowInput.value) {
+      if (currChar < "0" || currChar > "9") {
+        rowNonNumeric = true;
+      }
+    }
+    for (const currChar of columnInput.value) {
+      if (currChar < "0" || currChar > "9") {
+        columnNonNumeric = true;
+      }
+    }
+    if (columnNonNumeric || rowNonNumeric) {
+      alert("Non Numeric Values detected.");
+    } else {
+      console.log("Good to go");
+    }
+  });
+
+  adminControls.appendChild(rowInput);
+  adminControls.appendChild(columnInput);
+  adminControls.appendChild(generateRoomButton);
+
+  adminView.appendChild(adminControls);
+  mainContainer.appendChild(adminView);
+}
+
+function toggleSeatGraphicVisibility() {
+  for (const child of this.children) {
+    if (child.style.opacity != 0 || child.style.opacity == "") {
+      child.style.opacity = 0;
+    } else {
+      child.style.opacity = SeatGraphicOpacity;
+    }
+  }
+}
+
+// desks = python_desks_to_js();
+// Debug for Willy
+desks = [
+  ["1", "Desk 1", "1"],
+  ["2", "Desk 2", "1"],
+  ["3", "Desk 3", "0"],
+  ["4", "Desk 4", "1"],
+  ["5", "Desk 5", "0"],
+  ["6", "Desk 6", "1"],
+  ["7", "Desk 7", "0"],
+  ["8", "Desk 8", "1"],
+  ["9", "Desk 9", "1"],
+  ["10", "Desk 10", "1"],
+];
+populateRoom(desks);
