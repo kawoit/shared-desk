@@ -26,7 +26,8 @@ class Database:
         self.run_sql_statement(f"UPDATE desk SET in_use=1 WHERE id={desk_id}")
 
     def set_in_use(self, desk_id, user_id):
-        self.run_sql_statement(f"UPDATE desk SET in_use=1 card_id={user_id} WHERE id={desk_id}")
+        self.run_sql_statement(f"UPDATE desk SET in_use=1 WHERE id={desk_id}")
+        self.run_sql_statement(f'UPDATE desk SET card_id="{user_id}" WHERE id={desk_id}')
 
     def is_in_use(self, desk_id):
         result = self.run_sql_statement(f"SELECT in_use FROM desk WHERE id={desk_id}")
@@ -36,7 +37,7 @@ class Database:
             return False
 
     def set_free(self, desk_id):
-        self.run_sql_statement(f"UPDATE desk SET in_use=0 WHERE id={desk_id}")
+        self.run_sql_statement(f"UPDATE desk SET in_use=0, card_id=NULL WHERE id={desk_id}")
 
     def get_free_desks(self):
         result = self.run_sql_statement("SELECT * FROM desk WHERE in_use=0")
@@ -48,6 +49,10 @@ class Database:
 
     def get_user(self, user_id):
         result = self.run_sql_statement(f"SELECT * FROM user WHERE id={user_id}")
+        return result
+    
+    def get_user_by_card_id(self, card_id):
+        result = self.run_sql_statement(f"SELECT * FROM user WHERE card_id='{card_id}'")
         return result
 
     def get_desk(self, desk_id):
@@ -72,12 +77,12 @@ class Database:
         self.run_sql_statement("DELETE FROM user")
         self.run_sql_statement("DELETE FROM desk")
         self.set_desk("Desk 1")
-        self.set_desk("Desk 2")
+        self.set_desk("Test Desk")
         self.set_desk("Desk 3")
 
-        self.set_user("wolle", "61.26.113.55")
-        self.set_user("peter", "1.1.1.1")
-        self.set_user("hans", "2.2.2.2")
+        self.set_user("Martin", "ffc243d4adda2885bb05d603e8d120b2")
+        self.set_user("Peter", "b1b7ac8d459c051f0cfb9146396f5463")
+        self.set_user("TestHandy", "199b7e00c287e47ab07f7edc345f9b5b")
 
 class Desk:
     def __init__(self, name, database):
