@@ -7,8 +7,8 @@ import flask
 
 class Database:
     def __init__(self):
-        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)")
-        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, in_use BOOL)")
+        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, card_id TEXT)")
+        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, in_use BOOL, card_id TEXT)")
 
     def run_sql_statement(self, query):
         connection = sqlite3.connect("data.sqlite")
@@ -21,10 +21,13 @@ class Database:
         data = cursor.fetchall()
         connection.close()
         return data
+    
+    def set_in_use_test(self, desk_id):
+        self.run_sql_statement(f"UPDATE desk SET in_use=1 WHERE id={desk_id}")
 
-    def set_in_use(self, desk):
-        # Setze den Schreibtisch als "in Benutzung"
-        self.run_sql_statement(f"UPDATE desk SET in_use=1 WHERE id={desk}")
+    def set_in_use(self, desk_id, user_id):
+        self.run_sql_statement(f"UPDATE desk SET in_use=1 WHERE id={desk_id}")
+        self.run_sql_statement(f'UPDATE desk SET card_id="{user_id}" WHERE id={desk_id}')
 
     def is_in_use(self, desk_id):
         result = self.run_sql_statement(f"SELECT in_use FROM desk WHERE id={desk_id}")
@@ -34,7 +37,7 @@ class Database:
             return False
 
     def set_free(self, desk_id):
-        self.run_sql_statement(f"UPDATE desk SET in_use=0 WHERE id={desk_id}")
+        self.run_sql_statement(f"UPDATE desk SET in_use=0, card_id=NULL WHERE id={desk_id}")
 
     def get_free_desks(self):
         result = self.run_sql_statement("SELECT * FROM desk WHERE in_use=0")
@@ -47,13 +50,17 @@ class Database:
     def get_user(self, user_id):
         result = self.run_sql_statement(f"SELECT * FROM user WHERE id={user_id}")
         return result
+    
+    def get_user_by_card_id(self, card_id):
+        result = self.run_sql_statement(f"SELECT * FROM user WHERE card_id='{card_id}'")
+        return result
 
     def get_desk(self, desk_id):
         result = self.run_sql_statement(f"SELECT * FROM desk WHERE id=?", (desk_id,))
         return result
 
-    def set_user(self, name):
-        self.run_sql_statement(f"INSERT INTO user(name) VALUES ('{name}')")
+    def set_user(self, name, card_id):
+        self.run_sql_statement(f"INSERT INTO user(name, card_id) VALUES ('{name}', '{card_id}')")
 
     def set_desk(self, name):
         self.run_sql_statement(f"INSERT INTO desk(name, in_use) VALUES ('{name}', 0)")
@@ -65,6 +72,17 @@ class Database:
     def get_desk_id(self, name):
         result = self.run_sql_statement(r"SELECT id FROM desk WHERE name=?", (name,))
         return result
+    
+    def add_dummy_data(self):
+        self.run_sql_statement("DELETE FROM user")
+        self.run_sql_statement("DELETE FROM desk")
+        self.set_desk("Desk 1")
+        self.set_desk("Test Desk")
+        self.set_desk("Desk 3")
+
+        self.set_user("Martin", "ffc243d4adda2885bb05d603e8d120b2")
+        self.set_user("Peter", "b1b7ac8d459c051f0cfb9146396f5463")
+        self.set_user("TestHandy", "199b7e00c287e47ab07f7edc345f9b5b")
 
 class Desk:
     def __init__(self, name, database):
@@ -143,12 +161,11 @@ class Program:
         self.database = Database()
         if testing:
             self.desks = [("Desk 1"), ("Desk 2"), ("Desk 3")]
-            self.users = [("User 1"), ("User 2"), ("User 3")]
 
         for desk in self.desks:
             self.database.set_desk(desk)
-        for user in self.users:
-            self.database.set_user(user)
+
+        self.database.set_user("wolle", "61.26.113.55")
 
     def loop(self):
         print("Start Loop ...")

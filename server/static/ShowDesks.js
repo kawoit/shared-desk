@@ -36,27 +36,7 @@ function Footer() {
 
 function Main() {
   let mainDiv = document.createElement("div");
-
-  // get number of desks from desks variable
-  // value: 1,Desk 1,1,2,Desk 2,1,3,Desk 3,0,4,Desk 1,0,5,Desk 2,0,6,Desk 3,0
-  // split by comma
-  // get length of array
-
-  let desks = python_desks_to_js();
-  
-  // Debug for Willy
-  // let desks = [
-  //   ["1", "Desk 1", "1"],
-  //   ["2", "Desk 2", "1"],
-  //   ["3", "Desk 3", "0"],
-  //   ["4", "Desk 4", "1"],
-  //   ["5", "Desk 5", "0"],
-  //   ["6", "Desk 6", "1"],
-  //   ["7", "Desk 7", "0"],
-  //   ["8", "Desk 8", "1"],
-  //   ["9", "Desk 9", "1"],
-  //   ["10", "Desk 10", "1"],
-  // ];
+  let desks = python_desks;
   let room = populateRoom(desks);
   room.id = "room";
 
@@ -69,33 +49,36 @@ Header();
 Main();
 Footer();
 
-function python_desks_to_js() {
-  let str_desks = String(python_desks);
-  const desksArray = str_desks.split(",");
-  let seats = desksArray.length / 3;
-  // merge every 3 elements into one array
-  let merged = [];
-  for (let i = 0; i < desksArray.length; i += 3) {
-    merged.push(desksArray.slice(i, i + 3));
-  }
-  console.log(merged);
-  return merged;
+async function populateRoom_update() {
+  var desks;
+  await fetch('/get_desks_data')
+    .then(response => response.json())
+    .then(data => {
+      desks = data.desks;
+      let result = document.createElement("div");
+      result.id = "room";
+      desks.forEach((desk) => {
+        let className = "#seat" + desk["id"];
+        const element = document.querySelector(className);
+        if (desk["is_used"] == 1) {
+          element.style.backgroundColor = "#ff9b7d";
+          element.querySelector("#user").innerText = desk["user"];
+        }
+        else {
+          element.style.backgroundColor = "#26ce00";
+          element.querySelector("#user").innerText = " ";
+        }
+      });
+      return result;
+
+    })
+    .catch(error => {
+      alert("Keine Verbindung zum Server möglich!\n\n" + error);
+    });
+
 }
 
-function raw_array_to_dict_array(raw_array) {
-  let dict_array = [];
-  for (let i = 0; i < raw_array.length; i++) {
-    let desk = {};
-    desk["id"] = raw_array[i][0];
-    desk["name"] = raw_array[i][1];
-    desk["is_used"] = raw_array[i][2];
-    dict_array.push(desk);
-  }
-  return dict_array;
-}
-
-function populateRoom(desks_raw) {
-  let desks = raw_array_to_dict_array(desks_raw);
+function populateRoom(desks) {
   let result = document.createElement("div");
   result.id = "room";
 
@@ -114,26 +97,17 @@ function populateRoom(desks_raw) {
     }
     result.appendChild(child);
   });
-
   return result;
 }
 
 function generate_desk_view(desk, i) {
   let seatDiv = document.createElement("div");
-  seatDiv.className = "seat " + desk["id"];
+  seatDiv.id = "seat" + desk["id"];
   seatDiv.innerText = desk["name"];
   if (desk["is_used"] == 1) {
     seatDiv.style.backgroundColor = "#ff9b7d";
-    // set link for seatdiv to /set_free/<desk_id>
-    seatDiv.addEventListener("click", () => {
-      window.location.href = "/set_free/" + desk["id"];
-    });
   } else {
     seatDiv.style.backgroundColor = "#26ce00";
-    // set link for seatdiv to /set_in_use/<desk_id>
-    seatDiv.addEventListener("click", () => {
-      window.location.href = "/set_in_use/" + desk["id"];
-    });
   }
   let seatGraphic = document.createElement("div");
   seatGraphic.className = "SeatGraphic";
@@ -144,6 +118,23 @@ function generate_desk_view(desk, i) {
   chairGraphic.className = "Chair";
   seatGraphic.appendChild(chairGraphic);
   seatDiv.appendChild(seatGraphic);
+
+  user = document.createElement("div");
+  user.id = "user";
+  user.style.height = "1em";
+  user.innerText = "";
+  seatDiv.appendChild(user);
+
+  seatDiv.style.borderBlockWidth = "5px";
+  seatDiv.style.borderBlockStyle = "solid";
+  seatDiv.style.borderRadius = "5px";
+  seatDiv.style.padding = "10px";
+  seatDiv.style.margin = "10px";
+  seatDiv.style.textAlign = "center";
+  seatDiv.style.fontWeight = "bold";
+  seatDiv.style.width = "80%";
+  let column = (i % 3) + 1;
+  seatDiv.style.gridColumn = column;
   return seatDiv;
 }
 
@@ -188,3 +179,6 @@ function add_desk_popup() {
   popupFooter.appendChild(popupButton2);
   bodyElement.appendChild(popup);
 }
+
+// Alle 1 Sekunde aktualisieren
+setInterval(populateRoom_update, 1000);
