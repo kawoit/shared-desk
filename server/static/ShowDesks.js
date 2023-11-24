@@ -58,11 +58,11 @@ Footer();
 function python_desks_to_js() {
   let str_desks = String(python_desks);
   const desksArray = str_desks.split(",");
-  let seats = desksArray.length / 3;
+  let seats = desksArray.length / 4;
   // merge every 3 elements into one array
   let merged = [];
-  for (let i = 0; i < desksArray.length; i += 3) {
-    merged.push(desksArray.slice(i, i + 3));
+  for (let i = 0; i < desksArray.length; i += 4) {
+    merged.push(desksArray.slice(i, i + 4));
   }
   console.log(merged);
   return merged;
