@@ -5,12 +5,23 @@
   --seatHeight: 50px;
 }
 
+html {
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+}
+
 * {
   margin: 0;
   padding: 0;
 }
 
 #header {
+  z-index: 1000;
   position: sticky;
   top: 0;
   display: flex;
@@ -22,6 +33,7 @@
 }
 
 #footer {
+  position: absolute;
   bottom: 0;
   width: 100%;
   background-color: lightseagreen;
@@ -55,7 +67,51 @@
   height: calc(var(--headerHeight) / 2);
 }
 
+#main {
+  display: flex;
+  justify-content: center;
+}
+
+#NavMenu {
+  left: 0;
+  position: absolute;
+  overflow: auto;
+  z-index: 999;
+  width: fit-content;
+  min-width: 25%;
+  max-width: 100%;
+  max-height: 80vh;
+  background-color: lightgray;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#MenuContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menuItem {
+  border: 1px gray solid;
+  background-color: white;
+  overflow: hidden;
+  padding: 0.5em 0.5em;
+}
+
+.label {
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+
 #room {
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
   display: grid;
   align-items: center;
   justify-content: center;
@@ -88,6 +144,17 @@
   border: 1px black solid;
   background-color: gray;
   border-radius: 100%;
-  height: calc((var(--seatHeight)*0.4));
-  width: calc((var(--seatHeight)*0.4));
+  height: calc((var(--seatHeight) * 0.4));
+  width: calc((var(--seatHeight) * 0.4));
+}
+
+#AdminControls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+#heart {
+  color: red;
+  font-size: x-large;
 }

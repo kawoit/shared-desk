@@ -42,6 +42,8 @@ def set_free():
 def set_in_use():
     desk_id = request.args.get('desk_id')
     card_id = request.args.get('card_id')
+    desk_id.strip()
+    card_id.strip()
     if desk_id is None or card_id is None:
         return "Error"
     else:
