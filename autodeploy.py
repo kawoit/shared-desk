@@ -31,7 +31,7 @@ def webhook():
         branch = data['ref'].split('/')[-1]
 
         # Hier kannst du die Logik für die Ausführung des Skripts hinzufügen, wenn es sich um die gewünschte Branch handelt.
-        if branch == 'dein-ziel-branch':
+        if branch == 'server-deploy':
             print('Webhook empfangen. Führe das Skript aus...')
             subprocess.run(['./build_and_restart.sh'])
         else:
