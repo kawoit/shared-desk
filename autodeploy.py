@@ -29,6 +29,7 @@ def webhook():
 
     if 'ref' in data:
         branch = data['ref'].split('/')[-1]
+        branch.strip()
 
         # Hier kannst du die Logik für die Ausführung des Skripts hinzufügen, wenn es sich um die gewünschte Branch handelt.
         if branch == 'server-live-deploy':
