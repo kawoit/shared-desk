@@ -77,10 +77,10 @@ class Database:
         self.run_sql_statement("DELETE FROM user")
         self.run_sql_statement("DELETE FROM desk")
         self.set_desk("Desk 1")
-        self.set_desk("Test Desk")
+        self.set_desk("TestDesk")
         self.set_desk("Desk 3")
 
-        self.set_user("Martin", "ffc243d4adda2885bb05d603e8d120b2")
+        self.set_user("Martin", "612611355")
         self.set_user("Peter", "b1b7ac8d459c051f0cfb9146396f5463")
         self.set_user("TestHandy", "199b7e00c287e47ab07f7edc345f9b5b")
 

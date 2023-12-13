@@ -153,3 +153,8 @@ body {
   flex-direction: column;
   gap: 0.4em;
 }
+
+#heart {
+  color: red;
+  font-size: x-large;
+}

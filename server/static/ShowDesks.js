@@ -69,7 +69,7 @@ function Header() {
 function Footer() {
   let footerDiv = document.createElement("div");
   footerDiv.id = "footer";
-  footerDiv.innerHTML = "Made by SmartDesk Inc &copy;";
+  footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy;";
 
   bodyElement.appendChild(footerDiv);
 }
@@ -83,10 +83,6 @@ function Main() {
   mainDiv.appendChild(mainContainer);
 
   bodyElement.appendChild(mainDiv);
-  // get number of desks from desks variable
-  // value: 1,Desk 1,1,2,Desk 2,1,3,Desk 3,0,4,Desk 1,0,5,Desk 2,0,6,Desk 3,0
-  // split by comma
-  // get length of array
 }
 
 Header();
@@ -111,16 +107,15 @@ async function populateRoom_update() {
           let name = desk["name"];
           let user = desk["user"];
           element.innerHTML = name + "<br>" + user;
-          // element.querySelector("#user").innerText = desk["user"];
         }
         else {
           element.style.backgroundColor = "#26ce00";
           let name = desk["name"];
           element.innerHTML = name + "<br>";
-          // element.querySelector("#user").innerText = " ";
         }
+        element.appendChild(createSeatGraphic());
+
       });
-      // return result;
 
     })
     .catch(error => {
@@ -171,6 +166,12 @@ function generate_desk_view(desk, i) {
     //   window.location.href = "/set_in_use/" + desk["id"];
     // });
   }
+
+  seatDiv.appendChild(createSeatGraphic());
+  return seatDiv;
+}
+
+function createSeatGraphic() {
   let seatGraphic = document.createElement("div");
   seatGraphic.className = "SeatGraphic";
   seatGraphic.style.opacity = SeatGraphicOpacity;
@@ -180,8 +181,7 @@ function generate_desk_view(desk, i) {
   let chairGraphic = document.createElement("div");
   chairGraphic.className = "Chair";
   seatGraphic.appendChild(chairGraphic);
-  seatDiv.appendChild(seatGraphic);
-  return seatDiv;
+  return seatGraphic;
 }
 
 function Sleep(milliseconds) {
