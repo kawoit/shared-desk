@@ -1,4 +1,3 @@
-#/bin/bash
+#/bin/sh
 # Start the server
-rm data.sqlite
-venv/bin/python3 server.py
+python3 server.py
