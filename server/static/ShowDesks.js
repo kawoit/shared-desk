@@ -345,7 +345,7 @@ function placeElementsInGrid(elements) {
   elements.forEach(element => {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
-    gridItem.textContent = element.name;
+    gridItem.appendChild(createSeatGraphic());
     gridItem.style.gridRow = element.y_pos;
     gridItem.style.gridColumn = element.x_pos;
     gridContainer.appendChild(gridItem);
