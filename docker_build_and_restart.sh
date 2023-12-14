@@ -3,7 +3,7 @@
 # GitHub Repository und Branch
 # repository="dein-github-repository"
 branch="server-live-deploy"
-
+image_name="shared-desk-image"
 container_name="shared-desk"
 
 #stop script on error
@@ -20,8 +20,8 @@ git pull origin $branch
 
 # Docker Image erstellen
 echo "Docker Image erstellen..."
-docker build -t shared_desk_image .
+docker build -t $image_name .
 
 # Docker Container mit dem neuen Image starten
 echo "Starten des Docker Containers mit dem neuen Image..."
-docker run -d --name shared_desk -p 5000:5000 shared_desk_image
+docker run -d --name $container_name -p 5000:5000 $image_name
