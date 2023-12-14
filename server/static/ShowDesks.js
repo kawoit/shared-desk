@@ -371,9 +371,7 @@ function updateGridElements() {
   // for each desk in python_desks update the corresponding gridItem
   // in elements
   python_desks.forEach(desk => {
-    console.log("desk:"+desk);
-    console.log("elements:"+elements);
-    const gridItem = elements.find(element.name == desk.name);
+    const gridItem = elements.find(element => element.name == desk.name);
     gridItem.is_used = desk.is_used;
     if (gridItem.is_used) {
       gridItem.innerHTML = desk.name + "<br>" + desk.user;
