@@ -161,12 +161,5 @@ body {
 
 /* add modern table ui for id desksTable */
 #desksTable {
-  background-color: brown;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
   border-style: solid;
-  gap: 1em;
-  width: 100%;
-  padding: 1em;
 }
