@@ -189,3 +189,10 @@ body {
   padding: 1vw;
   background-color: lightgray;
 }
+
+.grid-item {
+  background-color: lightblue;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid black;
+}
