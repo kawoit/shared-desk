@@ -6,9 +6,6 @@ branch="server-live-deploy"
 image_name="shared-desk-image"
 container_name="shared-desk"
 
-#stop script on error
-set -e
-
 # Docker Container stoppen und löschen
 echo "Stoppen und Löschen des aktuellen Docker Containers..."
 docker stop $container_name
