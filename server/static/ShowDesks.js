@@ -353,7 +353,7 @@ function placeElementsInGrid(elements) {
   maincontainer.appendChild(gridContainer);
 }
 
-const elements = [];
+var elements = [];
 createGridElements();
 function createGridElements() {
   // for each desk in python_desks create a gridItem
