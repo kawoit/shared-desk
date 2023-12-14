@@ -86,9 +86,9 @@ function Main() {
   bodyElement.appendChild(mainDiv);
 }
 
-Header();
+// Header();
 Main();
-Footer();
+// Footer();
 
 async function populateRoom_update() {
   var desks;
