@@ -22,3 +22,5 @@ docker build -t $image_name .
 # Docker Container mit dem neuen Image starten
 echo "Starten des Docker Containers mit dem neuen Image..."
 docker run -d --name $container_name -p 5000:5000 $image_name
+
+docker system prune -a -f
