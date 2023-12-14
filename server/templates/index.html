@@ -3,3 +3,14 @@
 {% block title %}
     Shared Desk
 {% endblock %}
+
+{% block heading %}
+    Shared Desk
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var python_desks = {{ desks| tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='ShowDesks.js') }}"></script>
+{% endblock %}

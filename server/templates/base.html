@@ -16,7 +16,7 @@
                 <img src="static/icons/BurgerMenuIcon.png" class="burgerMenuIcon">
             </div>
         </div>
-        <div style="text-align: center;">Smart Desks</div>
+        <div style="text-align: center;">{% block heading %}{% endblock %}</div>
     </div>
 
     <div id="main"></div>
@@ -29,7 +29,5 @@
 </body>
 
 </html>
-<script>
-  var python_desks = {{ desks| tojson }};
-</script>
-<script src="{{ url_for('static', filename='ShowDesks.js') }}"></script>
+{% block scripts %}
+{% endblock %}
