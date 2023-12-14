@@ -353,18 +353,17 @@ function placeElementsInGrid(elements) {
   maincontainer.appendChild(gridContainer);
 }
 
-const elements = [
-  new GridItem(2, 5),
-  new GridItem(2, 2),
-  new GridItem(3, 3),
-  new GridItem(4, 4),
-  new GridItem(5, 5),
-  new GridItem(2, 3),
-  new GridItem(1, 2),
-  new GridItem(3, 4),
-  new GridItem(4, 2),
-  new GridItem(1, 5),
-];
+const elements = [];
+createGridElements();
+function createGridElements() {
+  // for each desk in python_desks create a gridItem
+  // and append it to elements
+  elements = [];
+  python_desks.forEach(desk => {
+    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name);
+    elements.push(gridItem);
+  });
+};
 
 placeElementsInGrid(elements);
 
