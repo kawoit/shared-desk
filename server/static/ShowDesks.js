@@ -375,11 +375,9 @@ function updateGridElements() {
     gridItem.is_used = desk.is_used;
     if (gridItem.is_used) {
       gridItem.innerHTML = desk.name + "<br>" + desk.user;
-      gridItem.style.backgroundColor = "#ff9b7d";
     }
     else {
       gridItem.innerHTML = desk.name + "<br>";
-      gridItem.style.backgroundColor = "#26ce00";
     }
   });
 }
