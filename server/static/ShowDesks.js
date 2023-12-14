@@ -63,6 +63,14 @@ function Header() {
   headerText.style.textAlign = "center";
   headerDiv.appendChild(headerText);
 
+  let adminControls = document.createElement("div");
+  let adminControlsLink = document.createElement("a");
+  adminControlsLink.href = "/admin";
+  adminControls.innerHTML = "Admin Panel";
+  adminControls.appendChild(adminControlsLink);
+  adminControls.style.textAlign = "center";
+  headerDiv.appendChild(adminControls);
+
   bodyElement.appendChild(headerDiv);
 }
 

@@ -66,5 +66,12 @@ def add_desk(name):
     database.set_desk(name)
     return redirect('/')
 
+@flask_app.route('/admin', methods = ['POST', 'GET'])
+def admin():
+    desks = process_desks()
+    return render_template('admin.html', desks=desks)
+
+
+
 if __name__ == '__main__':
     flask_app.run(host='0.0.0.0',debug=True)
