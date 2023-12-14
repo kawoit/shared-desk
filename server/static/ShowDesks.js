@@ -325,23 +325,44 @@ function toggleSeatGraphicVisibility() {
   }
 }
 
-// desks = python_desks_to_js();
-// Debug for Willy
-// desks = [
-//   ["1", "Desk 1", "1"],
-//   ["2", "Desk 2", "1"],
-//   ["3", "Desk 3", "0"],
-//   ["4", "Desk 4", "1"],
-//   ["5", "Desk 5", "0"],
-//   ["6", "Desk 6", "1"],
-//   ["7", "Desk 7", "0"],
-//   ["8", "Desk 8", "1"],
-//   ["9", "Desk 9", "1"],
-//   ["10", "Desk 10", "1"],
-// ];
-// populateRoom(desks);
+class GridItem {
+  constructor(x_pos, y_pos) {
+    this.x_pos = x_pos;
+    this.y_pos = y_pos;
+  }
+}
 
-populateRoom(python_desks)
+function placeElementsInGrid(elements) {
+  const gridContainer = document.getElementById('grid-container');
+
+  elements.forEach(element => {
+    const gridItem = document.createElement('div');
+    gridItem.classList.add('grid-item');
+    gridItem.textContent = `${element.x_pos},${element.y_pos}`;
+    gridItem.style.gridRow = element.y_pos;
+    gridItem.style.gridColumn = element.x_pos;
+    gridContainer.appendChild(gridItem);
+  });
+}
+
+const elements = [
+  new GridItem(1, 1),
+  new GridItem(2, 2),
+  new GridItem(3, 3),
+  new GridItem(4, 4),
+  new GridItem(5, 5),
+  new GridItem(2, 3),
+  new GridItem(1, 2),
+  new GridItem(3, 4),
+  new GridItem(4, 2),
+  new GridItem(1, 5),
+];
+
+placeElementsInGrid(elements);
+
+
+
+// populateRoom(python_desks)
 
 // Alle 1 Sekunde aktualisieren
-setInterval(populateRoom_update, 1000);
+// setInterval(populateRoom_update, 1000);

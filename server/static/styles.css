@@ -161,5 +161,31 @@ body {
 
 /* add modern table ui for id desksTable */
 #desksTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#desksTable th {
   border-style: solid;
+}
+
+#desksTable td {
+  border-style: solid;
+}
+
+#grid-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(
+    10,
+    1
+  );
+  grid-template-rows: repeat(
+    10,
+    1
+  );
+  gap: 1vw;
+  padding: 1vw;
+  background-color: lightgray;
 }

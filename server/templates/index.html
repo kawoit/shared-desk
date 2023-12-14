@@ -8,6 +8,10 @@
     Shared Desk
 {% endblock %}
 
+{% block content %}
+<div id="grid-container"></div>
+{% endblock %}
+
 {% block scripts %}
 <script>
     var python_desks = {{ desks| tojson }};
