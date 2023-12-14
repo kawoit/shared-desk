@@ -326,14 +326,14 @@ function toggleSeatGraphicVisibility() {
 }
 
 class GridItem {
-  constructor(x_pos, y_pos, name="") {
+  constructor(x_pos, y_pos, name="", is_used=0) {
   if (name == "") {
     name = "POS:"+x_pos + "/" + y_pos;
   }
   this.x_pos = x_pos;
   this.y_pos = y_pos;
   this.name = name;
-  this.is_used = 0;
+  this.is_used = is_used;
 }
 }
 
@@ -360,17 +360,39 @@ function createGridElements() {
   // and append it to elements
   elements = [];
   python_desks.forEach(desk => {
-    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name);
+    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
     elements.push(gridItem);
   });
 };
 
+function updateGridElements() {
+  // for each desk in python_desks update the corresponding gridItem
+  // in elements
+  python_desks.forEach(desk => {
+    const gridItem = elements.find(element.name == desk.name);
+    gridItem.is_used = desk.is_used;
+    if (gridItem.is_used) {
+      gridItem.innerHTML = desk.name + "<br>" + desk.user;
+      gridItem.style.backgroundColor = "#ff9b7d";
+    }
+    else {
+      gridItem.innerHTML = desk.name + "<br>";
+      gridItem.style.backgroundColor = "#26ce00";
+    }
+  });
+}
+
+function updateData() {
+  fetch('/get_desks_data')
+    .then(response => response.json())
+    .then(data => {
+      python_desks = data.desks;
+      updateGridElements();
+    })
+    .catch(error => {
+      console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+    });
+}
+
 placeElementsInGrid(elements);
-
-
-
-
-// populateRoom(python_desks)
-
-// Alle 1 Sekunde aktualisieren
-// setInterval(populateRoom_update, 1000);
+setInterval(updateData, 1000);
