@@ -11,7 +11,7 @@
 {% block content %}
     <div id="admin">
         <div id="adminTableView">
-            <table>
+            <table id="desksTable">
                 <tr>
                     <th>TableID</th>
                     <th>Name</th>
@@ -23,7 +23,6 @@
                         <td>No tables found</td>
                     </tr>
                 {% endif %}
-                {{ desks| tojson }}
                 {% for desk in desks %}
                     <tr>
                         <td>{{ desk.id }}</td>
