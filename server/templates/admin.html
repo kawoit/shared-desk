@@ -13,7 +13,8 @@
         <div id="adminTableView">
             <table>
                 <tr>
-                    <th>Table Name</th>
+                    <th>TableID</th>
+                    <th>Name</th>
                     <th>Room</th>
                     <th>Position</th>
                 </tr>
@@ -22,12 +23,13 @@
                         <td>No tables found</td>
                     </tr>
                 {% endif %}
-                {% desks %}
+                {{ desks| tojson }}
                 {% for desk in desks %}
                     <tr>
-                        <td>{{ desk.tablename }}</td>
+                        <td>{{ desk.id }}</td>
+                        <td>{{ desk.name }}</td>
                         <td>{{ desk.room }}</td>
-                        <td>{{ desk.position }}</td>
+                        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
                     </tr>
                 {% endfor %}
             </table>
