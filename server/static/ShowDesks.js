@@ -339,8 +339,8 @@ function placeElementsInGrid(elements) {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
     gridItem.textContent = `${element.x_pos},${element.y_pos}`;
-    gridItem.style.gridRow = element.y_pos;
-    gridItem.style.gridColumn = element.x_pos;
+    gridItem.style.gridRow = element.y_pos +1;
+    gridItem.style.gridColumn = element.x_pos +1;
     gridContainer.appendChild(gridItem);
   });
 }
