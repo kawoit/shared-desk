@@ -41,6 +41,7 @@ Rooms[0] = { python_desks };
 var desks = [];
 
 function Header() {
+  {% block header %} {% endblock %}
   let headerDiv = document.createElement("div");
   headerDiv.id = "header";
 
@@ -69,12 +70,14 @@ function Header() {
 function Footer() {
   let footerDiv = document.createElement("div");
   footerDiv.id = "footer";
-  footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy;";
+  footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy; {% block footer %} {% endblock %}";
+  
 
   bodyElement.appendChild(footerDiv);
 }
 
 function Main() {
+  {% block main %} {% endblock %}
   let mainDiv = document.createElement("div");
   mainDiv.id = "main";
   Nav(mainDiv);

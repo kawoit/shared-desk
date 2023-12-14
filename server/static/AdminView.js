@@ -26,7 +26,7 @@ function Header() {
   burgerBorder.appendChild(burgerImage);
 
   let headerText = document.createElement("div");
-  headerText.innerHTML = "Smart Desks";
+  headerText.innerHTML = "Smart Desks - Admin";
   headerText.style.textAlign = "center";
   headerDiv.appendChild(headerText);
 
