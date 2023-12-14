@@ -41,7 +41,6 @@ Rooms[0] = { python_desks };
 var desks = [];
 
 function Header() {
-  {% block header %} {% endblock %}
   let headerDiv = document.createElement("div");
   headerDiv.id = "header";
 
@@ -77,7 +76,6 @@ function Footer() {
 }
 
 function Main() {
-  {% block main %} {% endblock %}
   let mainDiv = document.createElement("div");
   mainDiv.id = "main";
   Nav(mainDiv);
