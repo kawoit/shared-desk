@@ -36,7 +36,8 @@ var SeatGraphicOpacity = 0.5;
 //   },
 // ];
 var Rooms = [];
-Rooms[0] = { python_desks };
+// Rooms[0] = { python_desks };
+var python_desks;
 
 var desks = [];
 
