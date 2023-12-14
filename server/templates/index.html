@@ -17,7 +17,7 @@
 
 {% block scripts %}
 <script>
-    // var python_desks = {{ desks| tojson }};
+    var python_desks = {{ desks| tojson }};
   </script>
   <script src="{{ url_for('static', filename='ShowDesks.js') }}"></script>
 {% endblock %}

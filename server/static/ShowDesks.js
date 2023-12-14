@@ -37,7 +37,7 @@ var SeatGraphicOpacity = 0.5;
 // ];
 var Rooms = [];
 // Rooms[0] = { python_desks };
-var python_desks;
+// var python_desks;
 
 var desks = [];
 
@@ -360,7 +360,7 @@ createGridElements();
 function createGridElements() {
   // for each desk in python_desks create a gridItem
   // and append it to elements
-  elements = [];
+  // elements = [];
   python_desks.forEach(desk => {
     const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
     elements.push(gridItem);
