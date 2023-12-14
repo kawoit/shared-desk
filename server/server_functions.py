@@ -8,7 +8,7 @@ import flask
 class Database:
     def __init__(self):
         self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, card_id TEXT)")
-        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, in_use BOOL, card_id TEXT)")
+        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, room TEXT,x_pos INT, y_pos INT, in_use BOOL, card_id TEXT)")
 
     def run_sql_statement(self, query):
         connection = sqlite3.connect("data.sqlite")
