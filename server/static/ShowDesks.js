@@ -63,14 +63,6 @@ function Header() {
   headerText.style.textAlign = "center";
   headerDiv.appendChild(headerText);
 
-  let adminControls = document.createElement("div");
-  let adminControlsLink = document.createElement("a");
-  adminControlsLink.href = "/admin";
-  adminControls.innerHTML = "Admin Panel";
-  adminControls.appendChild(adminControlsLink);
-  adminControls.style.textAlign = "center";
-  headerDiv.appendChild(adminControls);
-
   bodyElement.appendChild(headerDiv);
 }
 
@@ -272,52 +264,54 @@ function Nav(main) {
 }
 
 function changetoAdminView() {
-  toggleNavMenu();
-  let mainContainer = document.getElementById("MainContainer");
-  mainContainer.innerHTML = "";
+  // redirect to /admin
+  window.location.href = "/admin";
+  // toggleNavMenu();
+  // let mainContainer = document.getElementById("MainContainer");
+  // mainContainer.innerHTML = "";
 
-  let adminView = document.createElement("div");
-  adminView.id = "AdminView";
-  let adminControls = document.createElement("div");
-  adminControls.id = "AdminControls";
-  let rowInput = document.createElement("input");
-  rowInput.placeholder = "Enter Rows";
-  let columnInput = document.createElement("input");
-  columnInput.placeholder = "Enter Columns";
-  let generateRoomButton = document.createElement("button");
-  generateRoomButton.textContent = "Create Room";
-  generateRoomButton.addEventListener("click", () => {
-    let rowNonNumeric = false;
-    let columnNonNumeric = false;
+  // let adminView = document.createElement("div");
+  // adminView.id = "AdminView";
+  // let adminControls = document.createElement("div");
+  // adminControls.id = "AdminControls";
+  // let rowInput = document.createElement("input");
+  // rowInput.placeholder = "Enter Rows";
+  // let columnInput = document.createElement("input");
+  // columnInput.placeholder = "Enter Columns";
+  // let generateRoomButton = document.createElement("button");
+  // generateRoomButton.textContent = "Create Room";
+  // generateRoomButton.addEventListener("click", () => {
+  //   let rowNonNumeric = false;
+  //   let columnNonNumeric = false;
 
-    if (rowInput.value == "" || columnInput.value == "") {
-      alert("At least one Value is empty.");
-      return;
-    }
+  //   if (rowInput.value == "" || columnInput.value == "") {
+  //     alert("At least one Value is empty.");
+  //     return;
+  //   }
 
-    for (const currChar of rowInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        rowNonNumeric = true;
-      }
-    }
-    for (const currChar of columnInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        columnNonNumeric = true;
-      }
-    }
-    if (columnNonNumeric || rowNonNumeric) {
-      alert("Non Numeric Values detected.");
-    } else {
-      console.log("Good to go");
-    }
-  });
+  //   for (const currChar of rowInput.value) {
+  //     if (currChar < "0" || currChar > "9") {
+  //       rowNonNumeric = true;
+  //     }
+  //   }
+  //   for (const currChar of columnInput.value) {
+  //     if (currChar < "0" || currChar > "9") {
+  //       columnNonNumeric = true;
+  //     }
+  //   }
+  //   if (columnNonNumeric || rowNonNumeric) {
+  //     alert("Non Numeric Values detected.");
+  //   } else {
+  //     console.log("Good to go");
+  //   }
+  // });
 
-  adminControls.appendChild(rowInput);
-  adminControls.appendChild(columnInput);
-  adminControls.appendChild(generateRoomButton);
+  // adminControls.appendChild(rowInput);
+  // adminControls.appendChild(columnInput);
+  // adminControls.appendChild(generateRoomButton);
 
-  adminView.appendChild(adminControls);
-  mainContainer.appendChild(adminView);
+  // adminView.appendChild(adminControls);
+  // mainContainer.appendChild(adminView);
 }
 
 function toggleSeatGraphicVisibility() {
