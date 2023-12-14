@@ -4,10 +4,15 @@
 # repository="dein-github-repository"
 branch="server-live-deploy"
 
+container_name="shared-desk"
+
+#stop script on error
+set -e
+
 # Docker Container stoppen und löschen
 echo "Stoppen und Löschen des aktuellen Docker Containers..."
-docker stop shared_desk
-docker rm shared_desk
+docker stop $container_name
+docker rm $container_name
 
 # GitHub Repository aktualisieren
 echo "GitHub Repository aktualisieren..."
