@@ -326,9 +326,14 @@ function toggleSeatGraphicVisibility() {
 }
 
 class GridItem {
-  constructor(x_pos, y_pos) {
+  constructor(x_pos, y_pos, name="") {
+    if (name == "") {
+      name = "POS:"+x_pos + "/" + y_pos;
+    }
     this.x_pos = x_pos;
     this.y_pos = y_pos;
+    this.name = name;
+    this.is_used = 0;
   }
 }
 
@@ -338,7 +343,7 @@ function placeElementsInGrid(elements) {
   elements.forEach(element => {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
-    gridItem.textContent = `${element.x_pos},${element.y_pos}`;
+    gridItem.textContent = element.name;
     gridItem.style.gridRow = element.y_pos +1;
     gridItem.style.gridColumn = element.x_pos +1;
     gridContainer.appendChild(gridItem);

@@ -324,3 +324,46 @@ desks = [
   ["10", "Desk 10", "1"],
 ];
 populateRoom(desks);
+
+
+class GridItem {
+  constructor(x_pos, y_pos, name="") {
+  if (name == "") {
+    name = "POS:"+x_pos + "/" + y_pos;
+  }
+  this.x_pos = x_pos;
+  this.y_pos = y_pos;
+  this.name = name;
+  this.is_used = 0;
+}
+}
+
+function placeElementsInGrid(elements) {
+  const maincontainer = document.getElementById('MainContainer');
+  const gridContainer = document.createElement('grid-container');
+
+  elements.forEach(element => {
+    const gridItem = document.createElement('div');
+    gridItem.classList.add('grid-item');
+    gridItem.textContent = element.name;
+    gridItem.style.gridRow = element.y_pos;
+    gridItem.style.gridColumn = element.x_pos;
+    gridContainer.appendChild(gridItem);
+  });
+  maincontainer.appendChild(gridContainer);
+}
+
+const elements = [
+  new GridItem(2, 5),
+  new GridItem(2, 2),
+  new GridItem(3, 3),
+  new GridItem(4, 4),
+  new GridItem(5, 5),
+  new GridItem(2, 3),
+  new GridItem(1, 2),
+  new GridItem(3, 4),
+  new GridItem(4, 2),
+  new GridItem(1, 5),
+];
+
+placeElementsInGrid(elements);

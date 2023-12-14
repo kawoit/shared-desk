@@ -70,6 +70,8 @@ body {
 #main {
   display: flex;
   justify-content: center;
+  width: 100%;
+  border: 5px solid red;
 }
 
 #NavMenu {
@@ -110,7 +112,7 @@ body {
 
 #room {
   align-self: center;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   display: grid;
   align-items: center;
@@ -152,4 +154,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.4em;
+}
+
+#grid-container {
+ height: 100%;
+width: 100%;
+display: grid;
+grid-template-columns: repeat(10, 1); /* Ändern Sie die minimale Breite nach Bedarf */
+grid-template-rows: repeat(10, 1); /* Ändern Sie die minimale Höhe nach Bedarf */
+gap: 1vw; /* Skalierbarer Abstand zwischen den Grid-Feldern */
+padding: 1vw; /* Skalierbarer Außenabstand des Grids */
+background-color: lightgray; /* Hinzugefügt für bessere Sichtbarkeit */
+}
+
+.grid-item {
+background-color: lightblue;
+justify-content: center;
+align-items: center;
+border: 5px solid black;
 }
