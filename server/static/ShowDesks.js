@@ -90,64 +90,64 @@ function Main() {
 Main();
 // Footer();
 
-async function populateRoom_update() {
-  var desks;
-  await fetch('/get_desks_data')
-    .then(response => response.json())
-    .then(data => {
-      desks = data.desks;
-      console.log(desks);
-      desks.forEach((desk) => {
-        console.log(desk);
-        let className = "seat " + desk["id"];
-        const element = document.getElementsByClassName(className)[0];
-        console.log(element);
-        element.innerHTML = "";
-        if (desk["is_used"] == 1) {
-          element.style.backgroundColor = "#ff9b7d";
-          let name = desk["name"];
-          let user = desk["user"];
-          element.innerHTML = name + "<br>" + user;
-        }
-        else {
-          element.style.backgroundColor = "#26ce00";
-          let name = desk["name"];
-          element.innerHTML = name + "<br>";
-        }
-        element.appendChild(createSeatGraphic());
+// async function populateRoom_update() {
+//   var desks;
+//   await fetch('/get_desks_data')
+//     .then(response => response.json())
+//     .then(data => {
+//       desks = data.desks;
+//       console.log(desks);
+//       desks.forEach((desk) => {
+//         console.log(desk);
+//         let className = "seat " + desk["id"];
+//         const element = document.getElementsByClassName(className)[0];
+//         console.log(element);
+//         element.innerHTML = "";
+//         if (desk["is_used"] == 1) {
+//           element.style.backgroundColor = "#ff9b7d";
+//           let name = desk["name"];
+//           let user = desk["user"];
+//           element.innerHTML = name + "<br>" + user;
+//         }
+//         else {
+//           element.style.backgroundColor = "#26ce00";
+//           let name = desk["name"];
+//           element.innerHTML = name + "<br>";
+//         }
+//         element.appendChild(createSeatGraphic());
 
-      });
+//       });
 
-    })
-    .catch(error => {
-      console.log("Keine Verbindung zum Server möglich!\n\n" + error);
-    });
-}
+//     })
+//     .catch(error => {
+//       console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+//     });
+// }
 
-function populateRoom() {
-  let mainContainer = document.getElementById("MainContainer");
-  let desks = python_desks;
-  let result = document.createElement("div");
-  result.id = "room";
+// function populateRoom() {
+//   let mainContainer = document.getElementById("MainContainer");
+//   let desks = python_desks;
+//   let result = document.createElement("div");
+//   result.id = "room";
 
-  let row = 1;
-  let column = 1;
-  let amountColumns = 2;
-  desks.forEach((desk) => {
-    let child = generate_desk_view(desk, desks.indexOf(desk));
-    child.style.gridRow = row;
-    child.style.gridColumn = column;
-    if (column % amountColumns == 0) {
-      column = 1;
-      row++;
-    } else {
-      column++;
-    }
-    result.appendChild(child);
-  });
+//   let row = 1;
+//   let column = 1;
+//   let amountColumns = 2;
+//   desks.forEach((desk) => {
+//     let child = generate_desk_view(desk, desks.indexOf(desk));
+//     child.style.gridRow = row;
+//     child.style.gridColumn = column;
+//     if (column % amountColumns == 0) {
+//       column = 1;
+//       row++;
+//     } else {
+//       column++;
+//     }
+//     result.appendChild(child);
+//   });
 
-  mainContainer.appendChild(result);
-}
+//   mainContainer.appendChild(result);
+// }
 
 function generate_desk_view(desk, i) {
   let seatDiv = document.createElement("div");
@@ -382,7 +382,7 @@ function updateGridElements() {
   });
 }
 
-function updateData() {
+async function updateData() {
   fetch('/get_desks_data')
     .then(response => response.json())
     .then(data => {
