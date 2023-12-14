@@ -17,6 +17,12 @@
                     <th>Room</th>
                     <th>Position</th>
                 </tr>
+                {% if desks is none %}
+                    <tr>
+                        <td>No tables found</td>
+                    </tr>
+                {% endif %}
+                {% desks %}
                 {% for desk in desks %}
                     <tr>
                         <td>{{ desk.tablename }}</td>
