@@ -40,40 +40,40 @@ Rooms[0] = { python_desks };
 
 var desks = [];
 
-// function Header() {
-//   let headerDiv = document.createElement("div");
-//   headerDiv.id = "header";
+function Header() {
+  let headerDiv = document.createElement("div");
+  headerDiv.id = "header";
 
-//   let burgerMenu = document.createElement("div");
-//   burgerMenu.className = "burgerMenu";
-//   headerDiv.appendChild(burgerMenu);
-//   let burgerBorder = document.createElement("div");
-//   burgerBorder.className = "burgerBorder";
-//   burgerBorder.addEventListener("click", () => {
-//     toggleNavMenu();
-//   });
-//   burgerMenu.appendChild(burgerBorder);
-//   let burgerImage = document.createElement("img");
-//   burgerImage.src = "static/icons/BurgerMenuIcon.png";
-//   burgerImage.className = "burgerMenuIcon";
-//   burgerBorder.appendChild(burgerImage);
+  let burgerMenu = document.createElement("div");
+  burgerMenu.className = "burgerMenu";
+  headerDiv.appendChild(burgerMenu);
+  let burgerBorder = document.createElement("div");
+  burgerBorder.className = "burgerBorder";
+  burgerBorder.addEventListener("click", () => {
+    toggleNavMenu();
+  });
+  burgerMenu.appendChild(burgerBorder);
+  let burgerImage = document.createElement("img");
+  burgerImage.src = "static/icons/BurgerMenuIcon.png";
+  burgerImage.className = "burgerMenuIcon";
+  burgerBorder.appendChild(burgerImage);
 
-//   let headerText = document.createElement("div");
-//   headerText.innerHTML = "Smart Desks";
-//   headerText.style.textAlign = "center";
-//   headerDiv.appendChild(headerText);
+  let headerText = document.createElement("div");
+  headerText.innerHTML = "Smart Desks";
+  headerText.style.textAlign = "center";
+  headerDiv.appendChild(headerText);
 
-//   bodyElement.appendChild(headerDiv);
-// }
+  bodyElement.appendChild(headerDiv);
+}
 
-// function Footer() {
-//   let footerDiv = document.createElement("div");
-//   footerDiv.id = "footer";
-//   footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy; {% block footer %} {% endblock %}";
+function Footer() {
+  let footerDiv = document.createElement("div");
+  footerDiv.id = "footer";
+  footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy; {% block footer %} {% endblock %}";
   
 
-//   bodyElement.appendChild(footerDiv);
-// }
+  bodyElement.appendChild(footerDiv);
+}
 
 function Main() {
   let mainDiv = document.createElement("div");
