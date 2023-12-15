@@ -373,12 +373,13 @@ function updateGridElements() {
   python_desks.forEach(desk => {
     const gridItem = elements.find(element => element.name == desk.name);
     gridItem.is_used = desk.is_used;
-    if (gridItem.is_used) {
-      gridItem.innerHTML = desk.name + "<br>" + desk.user;
+    if (gridItem.is_used == 1) {
+      gridItem.text = desk.name + " " + desk.user;
     }
     else {
-      gridItem.innerHTML = desk.name + "<br>";
+      gridItem.text = desk.name;
     }
+    console.log(gridItem);
   });
 }
 
