@@ -38,6 +38,7 @@ def index():
 @flask_app.route('/set_free')
 def set_free():
     desk_id = request.args.get('desk_id')
+    desk_id = int(desk_id)+3
     database.set_free(desk_id)
     return redirect('/')
 
@@ -47,6 +48,7 @@ def set_in_use():
     card_id = request.args.get('card_id')
     desk_id.strip()
     card_id.strip()
+    desk_id = int(desk_id)+3
     if desk_id is None or card_id is None:
         return "Error"
     else:

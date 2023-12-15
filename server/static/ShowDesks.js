@@ -340,13 +340,14 @@ class GridItem {
 
 function placeElementsInGrid(elements) {
   const maincontainer = document.getElementById('MainContainer');
+  maincontainer.innerHTML = "";
   const gridContainer = document.createElement('div');
   gridContainer.id='grid-container';
 
   elements.forEach(element => {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
-    gridItem.innerHTML = element.name + "<br>";
+    gridItem.innerHTML = element.text;
     gridItem.appendChild(createSeatGraphic());
     gridItem.style.gridRow = element.y_pos;
     gridItem.style.gridColumn = element.x_pos;
@@ -368,19 +369,19 @@ function createGridElements() {
 };
 
 function updateGridElements() {
-  // for each desk in python_desks update the corresponding gridItem
-  // in elements
+  elements = [];
   python_desks.forEach(desk => {
-    const gridItem = elements.find(element => element.name == desk.name);
-    gridItem.is_used = desk.is_used;
+    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
+    console.log(gridItem);
     if (gridItem.is_used == 1) {
-      gridItem.text = desk.name + " " + desk.user;
+      gridItem.text = desk.user;
     }
     else {
       gridItem.text = desk.name;
     }
-    console.log(gridItem);
+    elements.push(gridItem);
   });
+  placeElementsInGrid(elements);
 }
 
 async function updateData() {
@@ -388,11 +389,11 @@ async function updateData() {
     .then(response => response.json())
     .then(data => {
       python_desks = data.desks;
-      updateGridElements();
     })
     .catch(error => {
       console.log("Keine Verbindung zum Server möglich!\n\n" + error);
     });
+    updateGridElements();
 }
 
 placeElementsInGrid(elements);
