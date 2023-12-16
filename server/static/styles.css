@@ -187,9 +187,7 @@ body {
   grid-template-rows: repeat(10, 1);
   gap: 1vw;
   padding: 1vw;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect x="50" y="50" width="300" height="200" fill="#f0f0f0" stroke="#333" stroke-width="2" /><rect x="50" y="50" width="20" height="200" fill="#ccc" /><rect x="100" y="180" width="40" height="20" fill="#964B00" /><rect x="250" y="70" width="30" height="30" fill="#ADD8E6" /></svg>');
-  
-  }
+    }
   
   .grid-item {
     width: min(10vw, var(--seatwidth)*0.8);
@@ -199,3 +197,7 @@ body {
     align-items: center;
     border: 1px solid black;
   }
+
+.room-bg {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect x="50" y="50" width="300" height="200" fill="#f0f0f0" stroke="#333" stroke-width="2" /><rect x="50" y="50" width="20" height="200" fill="#ccc" /><rect x="100" y="180" width="40" height="20" fill="#964B00" /><rect x="250" y="70" width="30" height="30" fill="#ADD8E6" /></svg>');
+}
