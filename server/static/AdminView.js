@@ -130,7 +130,7 @@ submitNewRoom.addEventListener("submit", (event) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     } else {
-      console.log("success");
+      console.log("Success Room Added");
     }
   });
 });
