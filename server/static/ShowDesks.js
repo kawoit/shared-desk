@@ -244,7 +244,7 @@ function Nav(main) {
   roomLabel.innerHTML = "Rooms";
   menuContainer.appendChild(roomLabel);
 
-  async function updateRoomData() {
+  function updateRoomData() {
     fetch('/get_rooms')
       .then(response => response.json())
       .then(data => {
