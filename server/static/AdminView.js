@@ -118,7 +118,7 @@ submitNewRoom.addEventListener("submit", (event) => {
     }
   }
 
-  console.log("Room Object:", JSON.stringify(room));
+  console.log(JSON.stringify(room));
 
   const url = "/admin";
 
