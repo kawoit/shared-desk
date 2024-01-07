@@ -3,6 +3,30 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 {% endblock %} {% block content %}
 <div id="admin">
+  <div id="adminTableView">
+    <table id="desksTable">
+      <h2>Desks</h2>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Position</th>
+      </tr>
+      {% if desks is none %}
+      <tr>
+        <td>No tables found</td>
+      </tr>
+      {% endif %} {% for desk in desks %}
+      <tr>
+        <td>{{ desk.id }}</td>
+        <td>{{ desk.name }}</td>
+        <td>{{ desk.room }}</td>
+        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
   <h2>Add Room</h2>
 
   <!-- form with input tablename, room, position -->
