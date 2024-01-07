@@ -118,7 +118,7 @@ submitNewRoom.addEventListener("submit", (event) => {
     }
   }
 
-  const url = "";
+  const url = "/admin";
 
   fetch(url, {
     method: "POST",
