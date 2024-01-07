@@ -66,6 +66,11 @@ def get_desks_data():
     desks = process_desks()
     return {"desks": desks}
 
+@flask_app.route("/get_rooms")
+def get_rooms():
+    rooms = database.get_rooms()
+    return jsonify(rooms)
+
 
 @flask_app.route("/add_user/<string:name>/<string:card_id>")
 def add_user(name, card_id):
@@ -83,8 +88,9 @@ def add_desk(name):
 @flask_app.route("/admin", methods=["GET", "POST"])
 def admin():
     if request.method == "POST":
-        print(request.get_json())
-        return jsonify(request.get_json())
+        print(f"add room: {request.get_json()}")
+        server_functions.add_room(request.get_json())
+        return "OK"
     else:
         desks = process_desks()
         return render_template("admin.html", desks=desks)

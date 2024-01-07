@@ -62,8 +62,25 @@ class Database:
     def set_user(self, name, card_id):
         self.run_sql_statement(f"INSERT INTO user(name, card_id) VALUES ('{name}', '{card_id}')")
 
-    def set_desk(self, name, room="", x_pos=0, y_pos=0):
+    def set_desk(self, name, room="test9913", x_pos=0, y_pos=0):
         self.run_sql_statement(f"INSERT INTO desk(name, in_use, room, x_pos, y_pos) VALUES ('{name}', 0, '{room}', {x_pos}, {y_pos})")
+
+    def add_room(self, data):
+        # data: {"Name":"Hello","desks":[{"name":"desk0","x_pos":"1","y_pos":"1"},{"name":"desk3","x_pos":"4","y_pos":"1"},{"name":"desk4","x_pos":"1","y_pos":"2"},{"name":"desk6","x_pos":"3","y_pos":"2"}]}
+        room_name = data["Name"]
+        desks = data["desks"]
+        for desk in desks:
+            desk_name = desk["name"]
+            x_pos = desk["x_pos"]
+            y_pos = desk["y_pos"]
+            self.set_desk(desk_name, room_name, x_pos, y_pos)
+        return True
+
+    def get_rooms(self):
+        result = self.run_sql_statement("SELECT DISTINCT room FROM desk")
+        #remove duplicates
+        result = list(dict.fromkeys(result))
+        return result
 
     def get_user_id(self, name):
         result = self.run_sql_statement(r"SELECT id FROM user WHERE name=?", (name,))
