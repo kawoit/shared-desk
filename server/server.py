@@ -90,7 +90,7 @@ def add_desk(name):
 def admin():
     if request.method == "POST":
         print(f"add room: {request.get_json()}")
-        # server_functions.add_room(request.get_json())
+        database.add_room(request.get_json())
         return "OK", 200
     else:
         desks = process_desks()
