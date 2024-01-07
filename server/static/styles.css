@@ -148,10 +148,10 @@ body {
   width: calc((var(--seatHeight) * 0.4));
 }
 @media (max-width: 600px) {
-  .Table{
+  .Table {
     display: none; /* Verstecke das Element bei einer Bildschirmbreite kleiner als 600px */
   }
-  .Chair{
+  .Chair {
     display: none;
   }
 }
@@ -183,21 +183,40 @@ body {
 
 #grid-container {
   display: grid;
-  grid-template-columns: repeat(10, 1); 
+  grid-template-columns: repeat(10, 1);
   grid-template-rows: repeat(10, 1);
   gap: 1vw;
   padding: 1vw;
-    }
-  
-  .grid-item {
-    width: min(10vw, var(--seatwidth)*0.8);
-    height: 2.8em;
-    padding: 0.5em;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-  }
+}
+
+.grid-item {
+  width: min(10vw, var(--seatwidth) * 0.8);
+  height: 2.8em;
+  padding: 0.5em;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
 
 .room-bg {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect x="50" y="50" width="300" height="200" fill="#f0f0f0" stroke="#333" stroke-width="2" /><rect x="50" y="50" width="20" height="200" fill="#ccc" /><rect x="100" y="180" width="40" height="20" fill="#964B00" /><rect x="250" y="70" width="30" height="30" fill="#ADD8E6" /></svg>');
+}
+
+/* AdminView Styling */
+
+#newRoom {
+  gap: 1px;
+  display: grid;
+  width: fit-content;
+}
+#TablePreview {
+  width: fit-content;
+}
+.desk {
+  padding: 1em;
+  width: 100px;
+  height: 50px;
+}
+.desk > * {
+  width: 80px;
 }
