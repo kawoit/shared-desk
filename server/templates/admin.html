@@ -2,7 +2,6 @@
 {% block heading %} Admin {% endblock %} {% block content %}
 <div id="admin">
   <div id="adminTableView">
-    {% comment %}
     <table id="desksTable">
       <h2>Desks</h2>
       <tr>
@@ -24,21 +23,28 @@
       </tr>
       {% endfor %}
     </table>
-    {% endcomment %}
   </div>
   <div id="addTable">
     <h2>Add Table</h2>
 
     <!-- form with input tablename, room, position -->
     <form action="/admin" method="POST">
-      <label for="tablename">Table Name:</label>
-      <input type="text" id="tablename" name="tablename" value="table1" />
       <label for="room">Room:</label>
       <input type="text" id="room" name="room" value="room1" />
-      <label for="Dimensions">Dimensions:</label><br>
-      <label >Height:</label><br>
-      <input type="text" id="y_Dimensions" name="y_Dimensions" value="y_Dimensions" />
-      <input type="text" id="x_Dimensions" name="x_Dimensions" value="x_Dimensions" />
+      <label for="Dimensions">Dimensions:</label><br />
+      <label>Height:</label><br />
+      <input
+        type="text"
+        id="y_Dimensions"
+        name="y_Dimensions"
+        value="y_Dimensions"
+      />
+      <input
+        type="text"
+        id="x_Dimensions"
+        name="x_Dimensions"
+        value="x_Dimensions"
+      />
       <input type="submit" value="Submit" />
     </form>
   </div>
