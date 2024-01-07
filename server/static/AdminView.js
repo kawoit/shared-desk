@@ -121,20 +121,16 @@ submitNewRoom.addEventListener("submit", (event) => {
   const url = "/admin";
 
   fetch(url, {
-    method: "GET",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(room), // Sending the room object as JSON
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    } else {
+      console.log("success");
+    }
   });
-
-  // fetch(url, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(room), // Sending the room object as JSON
-  // }).then((response) => {
-  //   if (!response.ok) {
-  //     throw new Error("Network response was not ok");
-  //   } else {
-  //     console.log("success");
-  //   }
-  // });
 });

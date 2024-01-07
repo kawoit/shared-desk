@@ -102,7 +102,7 @@ def admin():
         # You might perform other actions based on the received data
 
         # Return an updated desks list or other data if needed
-        return room
+        return jsonify("admin.html", data=room)
     else:
         desks = process_desks()
         return render_template("admin.html", desks=desks)
