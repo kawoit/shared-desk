@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Rectangles Editor</title>
+    <style>
+        #canvas {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .draggable-rect {
+            position: absolute;
+            cursor: move;
+            background-color: chartreuse;
+        }
+
+        .temp-rect {
+            position: absolute;
+            background-color: #3498db;
+            opacity: 0.3;
+        }
+
+        #svgCode {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas" onmousedown="startDrawing(event)" onmouseup="endDrawing(event)" onmousemove="drawTempRect(event)" onmouseenter="enterCanvas()" onmouseleave="leaveCanvas()">
+    </div>
+
+    <div>
+        <label>
+            <input type="radio" name="rectType" value="fill-none" checked> Fill None
+        </label>
+        <label>
+            <input type="radio" name="rectType" value="with-border"> With Border
+        </label>
+        <button onclick="resetRectangles()">Reset</button>
+        <button onclick="exportSVG()">Export</button>
+    </div>
+
+    <textarea id="svgCode" readonly></textarea>
+
+    <script>
+        let drawing = false;
+        let startX, startY;
+        let tempRect;
+
+        function enterCanvas() {
+            drawing = false;
+        }
+
+        function leaveCanvas() {
+            if (drawing) {
+                drawing = false;
+                tempRect.remove();
+            }
+        }
+
+        function startDrawing(event) {
+            if (!drawing) {
+                drawing = true;
+                startX = event.clientX;
+                startY = event.clientY;
+
+                tempRect = document.createElement('div');
+                tempRect.className = 'temp-rect';
+                document.getElementById('canvas').appendChild(tempRect);
+            }
+        }
+
+        function endDrawing(event) {
+            if (drawing) {
+                drawing = false;
+
+                const rect = document.createElement('div');
+                const rectType = document.querySelector('input[name="rectType"]:checked').value;
+
+                if (rectType === 'fill-none') {
+                    rect.className = 'draggable-rect';
+                    rect.style.backgroundColor = 'white';
+                    rect.style.border = '1px solid #ccc';  // Optional: Border für das Rechteck hinzufügen
+                } else {
+                    rect.className = 'draggable-rect';
+                    rect.classList.add(rectType);
+                }
+
+                const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+
+                const width = event.clientX - startX;
+                const height = event.clientY - startY;
+
+                rect.style.left = (width >= 0 ? startX : event.clientX) - canvasRect.left + 'px';
+                rect.style.top = (height >= 0 ? startY : event.clientY) - canvasRect.top + 'px';
+                rect.style.width = Math.abs(width) + 'px';
+                rect.style.height = Math.abs(height) + 'px';
+
+                
+
+                document.getElementById('canvas').appendChild(rect);
+                tempRect.remove();
+
+                updateSVGCode();
+            }
+        }
+
+        function drawTempRect(event) {
+            if (drawing) {
+                const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+
+                const width = event.clientX - startX;
+                const height = event.clientY - startY;
+
+                tempRect.style.left = (width >= 0 ? startX : event.clientX) - canvasRect.left + 'px';
+                tempRect.style.top = (height >= 0 ? startY : event.clientY) - canvasRect.top + 'px';
+                tempRect.style.width = Math.abs(width) + 'px';
+                tempRect.style.height = Math.abs(height) + 'px';
+            }
+        }
+
+        function resetRectangles() {
+            const canvas = document.getElementById('canvas');
+            const rectangles = canvas.querySelectorAll('.draggable-rect');
+
+            rectangles.forEach(rect => {
+                rect.remove();
+            });
+
+            updateSVGCode();
+        }
+
+        function exportSVG() {
+            const canvas = document.getElementById('canvas');
+            const rectangles = canvas.querySelectorAll('.draggable-rect');
+            let svgCode = '<svg xmlns="http://www.w3.org/2000/svg" width="' + canvas.offsetWidth + '" height="' + canvas.offsetHeight + '">';
+
+            rectangles.forEach(rect => {
+                svgCode += '<rect x="' + rect.style.left + '" y="' + rect.style.top + '" width="' + rect.style.width + '" height="' + rect.style.height + '" ';
+                if (rect.style.backgroundColor && rect.style.backgroundColor !== 'white') {
+                    svgCode += 'fill="' + rect.style.backgroundColor + '" ';
+                }
+                svgCode += '></rect>';
+            });
+
+            svgCode += '</svg>';
+            
+            document.getElementById('svgCode').value = svgCode;
+        }
+
+        function updateSVGCode() {
+            exportSVG();
+        }
+    </script>
+</body>
+</html>
