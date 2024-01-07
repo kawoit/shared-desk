@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 {% endblock %} {% block content %}
 <div id="admin">
-  <div id="adminTableView">
+  {% comment %} <div id="adminTableView">
     <table id="desksTable">
       <h2>Desks</h2>
       <tr>
@@ -25,7 +25,7 @@
       </tr>
       {% endfor %}
     </table>
-  </div>
+  </div> {% endcomment %}
   <div id="addTable">
     <h2>Add Room</h2>
 
