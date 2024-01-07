@@ -66,6 +66,7 @@ def get_desks_data():
     desks = process_desks()
     return {"desks": desks}
 
+
 @flask_app.route("/get_rooms")
 def get_rooms():
     rooms = database.get_rooms()
@@ -90,7 +91,7 @@ def admin():
     if request.method == "POST":
         print(f"add room: {request.get_json()}")
         server_functions.add_room(request.get_json())
-        return "OK"
+        return request.get_json()
     else:
         desks = process_desks()
         return render_template("admin.html", desks=desks)
