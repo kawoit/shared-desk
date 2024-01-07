@@ -134,3 +134,50 @@ submitNewRoom.addEventListener("submit", (event) => {
     }
   });
 });
+
+var user = { name: "", card_id: undefined };
+var submitUserButton = document.getElementById("AddNewUserButton");
+var username = document.getElementById("username");
+var card_id = document.getElementById("card_id");
+
+username.addEventListener("change", (event) => {
+  updateUser();
+});
+
+card_id.addEventListener("change", (event) => {
+  updateUser();
+});
+
+function updateUser() {
+  let validUser = true;
+  if (username.value.length == 0 || card_id.value.length == 0) {
+    validUser = false;
+  }
+
+  if (validUser) {
+    submitUserButton.disabled = false;
+  }
+}
+
+submitUserButton.addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const username = document.getElementById("username").value;
+  const cardId = document.getElementById("card_id").value;
+
+  // Send a POST request to the Flask route
+  fetch(`/add_user/${username}/${cardId}`, {
+    method: "GET", // Change this to "POST" if needed
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log(`User ${username}/${cardId} added successfully`);
+        // Perform any additional actions upon successful addition
+      } else {
+        console.error("Failed to add user");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
