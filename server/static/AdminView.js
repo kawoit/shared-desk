@@ -54,16 +54,16 @@ function DrawPreview() {
     let newRoom = document.createElement("div");
     newRoom.id = "newRoom";
     let id = 0;
-    for (let x_index = 0; x_index < x.value; x_index++) {
-      for (let y_index = 0; y_index < y.value; y_index++) {
+    for (let y_index = 0; y_index < y.value; y_index++) {
+      for (let x_index = 0; x_index < x.value; x_index++) {
         let desk = document.createElement("div");
         desk.dataset.active = true;
-        desk.dataset.x = x_index;
-        desk.dataset.y = y_index;
-        desk.className = "desk " + id;
-        desk.style.gridColumn = y_index + 1;
+        desk.dataset.x = x_index + 1;
+        desk.dataset.y = y_index + 1;
         desk.style.gridRow = x_index + 1;
+        desk.style.gridColumn = y_index + 1;
         let setDeskName = document.createElement("input");
+        desk.className = "desk " + id;
         setDeskName.value = "desk" + id;
         desk.appendChild(setDeskName);
         newRoom.appendChild(desk);
