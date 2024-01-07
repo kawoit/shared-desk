@@ -255,6 +255,7 @@ function Nav(main) {
       });
   }
   updateRoomData();
+  console.log("Rooms: " + Rooms)
   for (const room of Rooms) {
     let roomMenu = document.createElement("div");
     roomMenu.className = "menuItem";
