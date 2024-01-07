@@ -159,19 +159,23 @@ function updateUser() {
   }
 }
 
-submitUserButton.addEventListener("submit", function (event) {
+document.getElementById("addUser").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent default form submission
 
-  const username = document.getElementById("username").value;
+  const name = document.getElementById("username").value;
   const cardId = document.getElementById("card_id").value;
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("card_id", cardId);
 
   // Send a POST request to the Flask route
-  fetch(`/add_user/${username}/${cardId}`, {
-    method: "GET", // Change this to "POST" if needed
+  fetch("/add_user", {
+    method: "POST",
+    body: formData,
   })
     .then((response) => {
       if (response.ok) {
-        console.log(`User ${username}/${cardId} added successfully`);
+        console.log(`User ${name}/${cardId} added successfully`);
         // Perform any additional actions upon successful addition
       } else {
         console.error("Failed to add user");

@@ -73,8 +73,10 @@ def get_rooms():
     return jsonify(rooms)
 
 
-@flask_app.route("/add_user/<string:name>/<string:card_id>")
-def add_user(name, card_id):
+@flask_app.route("/add_user", methods=["POST"])
+def add_user():
+    name = request.form.get("name")
+    card_id = request.form.get("card_id")
     database.set_user(name, card_id)
     print(f"Added user {name}/{card_id}")
     return redirect("/")
@@ -98,11 +100,9 @@ def admin():
 
 
 @flask_app.route("/db")
-def printDB():
-    dbContent = []
-    dbContent.append((database.get_desks()))
-    dbContent.append((database.get_users()))
-    return jsonify(dbContent), 200
+def print_db():
+    db_content = {"desks": database.get_desks(), "users": database.get_users()}
+    return jsonify(db_content), 200
 
 
 if __name__ == "__main__":
