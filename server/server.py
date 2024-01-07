@@ -83,26 +83,8 @@ def add_desk(name):
 @flask_app.route("/admin", methods=["GET", "POST"])
 def admin():
     if request.method == "POST":
-        # Handle the POST request data here
-        room = request.form.get("room")  # Get 'room' field from form
-        print(room)
-        # x_dimensions = request.form.get(
-        #     "x_Dimensions"
-        # )  # Get 'x_Dimensions' field from form
-        # y_dimensions = request.form.get(
-        #     "y_Dimensions"
-        # )  # Get 'y_Dimensions' field from form
-
-        # Perform operations or update desks based on the received data
-
-        # For example:
-        # Update the desks list with the received data
-        # desks = process_desks(room_name)
-
-        # You might perform other actions based on the received data
-
-        # Return an updated desks list or other data if needed
-        return jsonify(room)
+        print(request.get_json())
+        return jsonify(request.get_json())
     else:
         desks = process_desks()
         return render_template("admin.html", desks=desks)
