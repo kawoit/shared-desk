@@ -244,6 +244,17 @@ function Nav(main) {
   roomLabel.innerHTML = "Rooms";
   menuContainer.appendChild(roomLabel);
 
+  async function updateRoomData() {
+    fetch('/get_rooms')
+      .then(response => response.json())
+      .then(data => {
+        Rooms = data;
+      })
+      .catch(error => {
+        console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+      });
+  }
+  updateRoomData();
   for (const room of Rooms) {
     let roomMenu = document.createElement("div");
     roomMenu.className = "menuItem";
