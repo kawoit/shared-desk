@@ -85,6 +85,7 @@ def admin():
     if request.method == "POST":
         # Handle the POST request data here
         room = request.form.get("room")  # Get 'room' field from form
+        print(room)
         # x_dimensions = request.form.get(
         #     "x_Dimensions"
         # )  # Get 'x_Dimensions' field from form
@@ -101,7 +102,7 @@ def admin():
         # You might perform other actions based on the received data
 
         # Return an updated desks list or other data if needed
-        return jsonify({"message": "Data received successfully", "data": room})
+        return room
     else:
         desks = process_desks()
         return render_template("admin.html", desks=desks)
