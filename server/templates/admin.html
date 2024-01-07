@@ -3,32 +3,22 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 {% endblock %} {% block content %}
 <div id="admin">
-  <div id="addTable">
-    <h2>Add Room</h2>
+  <h2>Add Room</h2>
 
-    <!-- form with input tablename, room, position -->
-    <form id="submitNewRoom">
-      <label for="room">Room:</label>
-      <input type="text" id="room" name="room" placeholder="Roomname" /><br />
-      <label for="Dimensions">Dimensions:</label><br />
-      <label>Room Height:</label>
-      <input
-        type="text"
-        id="y_Dimensions"
-        name="y_Dimensions"
-        placeholder="y"
-      />
-      <label>Room Width:</label>
-      <input
-        type="text"
-        id="x_Dimensions"
-        name="x_Dimensions"
-        placeholder="x"
-      />
-      <input id="AddNewRoomButton" type="submit" value="Submit" disabled />
-    </form>
-    <div id="TablePreview"></div>
-  </div>
+  <!-- form with input tablename, room, position -->
+  <form id="submitNewRoom">
+    <label for="room">Room:</label>
+    <input type="text" id="room" name="room" placeholder="Roomname" /><br />
+    <label for="Dimensions">Dimensions:</label><br />
+    <label>Room Height:</label>
+    <input type="text" id="y_Dimensions" name="y_Dimensions" placeholder="y" />
+    <label>Room Width:</label>
+    <input type="text" id="x_Dimensions" name="x_Dimensions" placeholder="x" />
+    <input id="AddNewRoomButton" type="submit" value="Submit" disabled />
+  </form>
+  <div id="TablePreview"></div>
+
+  <h2>Add User</h2>
   <div id="addUser">
     <form id="submitNewUser">
       <label for="username">Username:</label>
@@ -49,8 +39,6 @@
     </form>
   </div>
 </div>
-
-<div id="TablePreview"></div>
 {% endblock %} {% block scripts %}
 <script>
   function toggleNavMenu() {
