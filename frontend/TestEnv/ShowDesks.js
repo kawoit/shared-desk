@@ -90,55 +90,30 @@ Header();
 Main();
 Footer();
 
-function python_desks_to_js() {
-  let str_desks = String(python_desks);
-  const desksArray = str_desks.split(",");
-  let seats = desksArray.length / 3;
-  // merge every 3 elements into one array
-  let merged = [];
-  for (let i = 0; i < desksArray.length; i += 3) {
-    merged.push(desksArray.slice(i, i + 3));
-  }
-  console.log(merged);
-  return merged;
-}
+// function populateRoom(desks_raw) {
+//   let mainContainer = document.getElementById("MainContainer");
+//   let desks = raw_array_to_dict_array(desks_raw);
+//   let result = document.createElement("div");
+//   result.id = "room";
 
-function raw_array_to_dict_array(raw_array) {
-  let dict_array = [];
-  for (let i = 0; i < raw_array.length; i++) {
-    let desk = {};
-    desk["id"] = raw_array[i][0];
-    desk["name"] = raw_array[i][1];
-    desk["is_used"] = raw_array[i][2];
-    dict_array.push(desk);
-  }
-  return dict_array;
-}
+//   let row = 1;
+//   let column = 1;
+//   let amountColumns = 2;
+//   desks.forEach((desk) => {
+//     let child = generate_desk_view(desk, desks.indexOf(desk));
+//     child.style.gridRow = row;
+//     child.style.gridColumn = column;
+//     if (column % amountColumns == 0) {
+//       column = 1;
+//       row++;
+//     } else {
+//       column++;
+//     }
+//     result.appendChild(child);
+//   });
 
-function populateRoom(desks_raw) {
-  let mainContainer = document.getElementById("MainContainer");
-  let desks = raw_array_to_dict_array(desks_raw);
-  let result = document.createElement("div");
-  result.id = "room";
-
-  let row = 1;
-  let column = 1;
-  let amountColumns = 2;
-  desks.forEach((desk) => {
-    let child = generate_desk_view(desk, desks.indexOf(desk));
-    child.style.gridRow = row;
-    child.style.gridColumn = column;
-    if (column % amountColumns == 0) {
-      column = 1;
-      row++;
-    } else {
-      column++;
-    }
-    result.appendChild(child);
-  });
-
-  mainContainer.appendChild(result);
-}
+//   mainContainer.appendChild(result);
+// }
 
 function generate_desk_view(desk, i) {
   let seatDiv = document.createElement("div");
@@ -220,9 +195,9 @@ function Nav(main) {
   let adminViewMenuItem = document.createElement("div");
   adminViewMenuItem.className = "menuItem";
   adminViewMenuItem.innerHTML = "Admin View";
-  adminViewMenuItem.addEventListener("click", changetoAdminView);
+  // adminViewMenuItem.addEventListener("click", changetoAdminView);
 
-  menuContainer.appendChild(adminViewMenuItem);
+  // menuContainer.appendChild(adminViewMenuItem);
 
   let roomLabel = document.createElement("div");
   roomLabel.className = "label";
@@ -241,86 +216,51 @@ function Nav(main) {
     roomMenu.innerHTML = room.name; // TODO Actually implement logic here
     menuContainer.appendChild(roomMenu);
   }
-
-  // for (let i = 0; i < 1000; i++) {
-  //   let filler = document.createElement("div");
-  //   filler.className = "menuItem";
-  //   filler.innerHTML = "Placeholder";
-  //   menu.appendChild(filler);
-  // }
 }
 
-function changetoAdminView() {
-  toggleNavMenu();
-  let mainContainer = document.getElementById("MainContainer");
-  mainContainer.innerHTML = "";
 
-  let adminView = document.createElement("div");
-  adminView.id = "AdminView";
-  let adminControls = document.createElement("div");
-  adminControls.id = "AdminControls";
-  let rowInput = document.createElement("input");
-  rowInput.placeholder = "Enter Rows";
-  let columnInput = document.createElement("input");
-  columnInput.placeholder = "Enter Columns";
-  let generateRoomButton = document.createElement("button");
-  generateRoomButton.textContent = "Create Room";
-  generateRoomButton.addEventListener("click", () => {
-    let rowNonNumeric = false;
-    let columnNonNumeric = false;
+// populateRoom(desks);
 
-    if (rowInput.value == "" || columnInput.value == "") {
-      alert("At least one Value is empty.");
-      return;
-    }
 
-    for (const currChar of rowInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        rowNonNumeric = true;
-      }
-    }
-    for (const currChar of columnInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        columnNonNumeric = true;
-      }
-    }
-    if (columnNonNumeric || rowNonNumeric) {
-      alert("Non Numeric Values detected.");
-    } else {
-      console.log("Good to go");
-    }
-  });
-
-  adminControls.appendChild(rowInput);
-  adminControls.appendChild(columnInput);
-  adminControls.appendChild(generateRoomButton);
-
-  adminView.appendChild(adminControls);
-  mainContainer.appendChild(adminView);
-}
-
-function toggleSeatGraphicVisibility() {
-  for (const child of this.children) {
-    if (child.style.opacity != 0 || child.style.opacity == "") {
-      child.style.opacity = 0;
-    } else {
-      child.style.opacity = SeatGraphicOpacity;
-    }
+class GridItem {
+  constructor(x_pos, y_pos, name="") {
+  if (name == "") {
+    name = "POS:"+x_pos + "/" + y_pos;
   }
+  this.x_pos = x_pos;
+  this.y_pos = y_pos;
+  this.name = name;
+  this.is_used = 0;
+}
 }
 
-// desks = python_desks_to_js();
-// Debug for Willy
-desks = [
-  ["1", "Desk 1", "1"],
-  ["2", "Desk 2", "1"],
-  ["3", "Desk 3", "0"],
-  ["4", "Desk 4", "1"],
-  ["5", "Desk 5", "0"],
-  ["6", "Desk 6", "1"],
-  ["7", "Desk 7", "0"],
-  ["8", "Desk 8", "1"],
-  ["9", "Desk 9", "1"],
-  ["10", "Desk 10", "1"],
+function placeElementsInGrid(elements) {
+  const maincontainer = document.getElementById('MainContainer');
+  const gridContainer = document.createElement('div');
+  gridContainer.id='grid-container';
+
+  elements.forEach(element => {
+    const gridItem = document.createElement('div');
+    gridItem.classList.add('grid-item');
+    gridItem.textContent = element.name;
+    gridItem.style.gridRow = element.y_pos;
+    gridItem.style.gridColumn = element.x_pos;
+    gridContainer.appendChild(gridItem);
+  });
+  maincontainer.appendChild(gridContainer);
+}
+
+const elements = [
+  new GridItem(2, 5),
+  new GridItem(2, 2),
+  new GridItem(3, 3),
+  new GridItem(4, 4),
+  new GridItem(5, 5),
+  new GridItem(2, 3),
+  new GridItem(1, 2),
+  new GridItem(3, 4),
+  new GridItem(4, 2),
+  new GridItem(1, 5),
 ];
-populateRoom(desks);
+
+placeElementsInGrid(elements);

@@ -8,7 +8,7 @@ import flask
 class Database:
     def __init__(self):
         self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, card_id TEXT)")
-        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, in_use BOOL, card_id TEXT)")
+        self.run_sql_statement(r"CREATE TABLE IF NOT EXISTS desk (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, room TEXT,x_pos INT, y_pos INT, in_use BOOL, card_id TEXT)")
 
     def run_sql_statement(self, query):
         connection = sqlite3.connect("data.sqlite")
@@ -62,8 +62,8 @@ class Database:
     def set_user(self, name, card_id):
         self.run_sql_statement(f"INSERT INTO user(name, card_id) VALUES ('{name}', '{card_id}')")
 
-    def set_desk(self, name):
-        self.run_sql_statement(f"INSERT INTO desk(name, in_use) VALUES ('{name}', 0)")
+    def set_desk(self, name, room="", x_pos=0, y_pos=0):
+        self.run_sql_statement(f"INSERT INTO desk(name, in_use, room, x_pos, y_pos) VALUES ('{name}', 0, '{room}', {x_pos}, {y_pos})")
 
     def get_user_id(self, name):
         result = self.run_sql_statement(r"SELECT id FROM user WHERE name=?", (name,))
@@ -76,9 +76,12 @@ class Database:
     def add_dummy_data(self):
         self.run_sql_statement("DELETE FROM user")
         self.run_sql_statement("DELETE FROM desk")
-        self.set_desk("Desk 1")
-        self.set_desk("TestDesk")
-        self.set_desk("Desk 3")
+        self.set_desk("Desk 1", "Room 1", 1, 5)
+        self.set_desk("TestDesk", "Room 1", 0, 1)
+        self.set_desk("Desk 3", "Room 1", 2, 3)
+        self.set_desk("Desk 4", "Room 1", 3, 2)
+        self.set_desk("Desk 5", "Room 1", 4, 1)
+        self.set_desk("Desk 6", "Room 1", 5, 0)
 
         self.set_user("Martin", "612611355")
         self.set_user("Peter", "b1b7ac8d459c051f0cfb9146396f5463")

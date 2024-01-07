@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+
+<body>
+  <body>
+    <div id="header">
+        <div class="burgerMenu" onclick="toggleNavMenu()">
+            <div class="burgerBorder">
+                <img src="static/icons/BurgerMenuIcon.png" class="burgerMenuIcon">
+            </div>
+        </div>
+        <div style="text-align: center;">{% block heading %}{% endblock %}</div>
+      </div>
+      
+      <div id="main"></div>
+      {% block content %}
+      {% endblock %}
+      <div id="footer">
+        Made with <span id='heart'> &hearts;</span> by Shared Desk &copy;
+      </div>
+    </body>
+
+</html>
+{% block scripts %}
+{% endblock %}

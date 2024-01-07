@@ -17,8 +17,11 @@ def process_desks():
         new_desk = {}
         new_desk["id"] = desk[0]
         new_desk["name"] = desk[1]
-        new_desk["is_used"] = desk[2]
-        new_desk["card_id"] = desk[3]
+        new_desk["room"] = desk[2]
+        new_desk["x_pos"] = desk[3]
+        new_desk["y_pos"] = desk[4]
+        new_desk["is_used"] = desk[5]
+        new_desk["card_id"] = desk[6]
         if new_desk["card_id"]:
             new_desk["user"] = get_username_by_card_id(new_desk["card_id"])
         else:
@@ -65,6 +68,13 @@ def add_user(name, card_id):
 def add_desk(name):
     database.set_desk(name)
     return redirect('/')
+
+@flask_app.route('/admin', methods = ['POST', 'GET'])
+def admin():
+    desks = process_desks()
+    return render_template('admin.html', desks=desks)
+
+
 
 if __name__ == '__main__':
     flask_app.run(host='0.0.0.0',debug=True)

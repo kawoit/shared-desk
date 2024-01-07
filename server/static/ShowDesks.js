@@ -36,43 +36,45 @@ var SeatGraphicOpacity = 0.5;
 //   },
 // ];
 var Rooms = [];
-Rooms[0] = { python_desks };
+// Rooms[0] = { python_desks };
+// var python_desks;
 
 var desks = [];
 
-function Header() {
-  let headerDiv = document.createElement("div");
-  headerDiv.id = "header";
+// function Header() {
+//   let headerDiv = document.createElement("div");
+//   headerDiv.id = "header";
 
-  let burgerMenu = document.createElement("div");
-  burgerMenu.className = "burgerMenu";
-  headerDiv.appendChild(burgerMenu);
-  let burgerBorder = document.createElement("div");
-  burgerBorder.className = "burgerBorder";
-  burgerBorder.addEventListener("click", () => {
-    toggleNavMenu();
-  });
-  burgerMenu.appendChild(burgerBorder);
-  let burgerImage = document.createElement("img");
-  burgerImage.src = "static/icons/BurgerMenuIcon.png";
-  burgerImage.className = "burgerMenuIcon";
-  burgerBorder.appendChild(burgerImage);
+//   let burgerMenu = document.createElement("div");
+//   burgerMenu.className = "burgerMenu";
+//   headerDiv.appendChild(burgerMenu);
+//   let burgerBorder = document.createElement("div");
+//   burgerBorder.className = "burgerBorder";
+//   burgerBorder.addEventListener("click", () => {
+//     toggleNavMenu();
+//   });
+//   burgerMenu.appendChild(burgerBorder);
+//   let burgerImage = document.createElement("img");
+//   burgerImage.src = "static/icons/BurgerMenuIcon.png";
+//   burgerImage.className = "burgerMenuIcon";
+//   burgerBorder.appendChild(burgerImage);
 
-  let headerText = document.createElement("div");
-  headerText.innerHTML = "Smart Desks";
-  headerText.style.textAlign = "center";
-  headerDiv.appendChild(headerText);
+//   let headerText = document.createElement("div");
+//   headerText.innerHTML = "Smart Desks";
+//   headerText.style.textAlign = "center";
+//   headerDiv.appendChild(headerText);
 
-  bodyElement.appendChild(headerDiv);
-}
+//   bodyElement.appendChild(headerDiv);
+// }
 
-function Footer() {
-  let footerDiv = document.createElement("div");
-  footerDiv.id = "footer";
-  footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy;";
+// function Footer() {
+//   let footerDiv = document.createElement("div");
+//   footerDiv.id = "footer";
+//   footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy; {% block footer %} {% endblock %}";
+  
 
-  bodyElement.appendChild(footerDiv);
-}
+//   bodyElement.appendChild(footerDiv);
+// }
 
 function Main() {
   let mainDiv = document.createElement("div");
@@ -85,68 +87,68 @@ function Main() {
   bodyElement.appendChild(mainDiv);
 }
 
-Header();
+// Header();
 Main();
-Footer();
+// Footer();
 
-async function populateRoom_update() {
-  var desks;
-  await fetch('/get_desks_data')
-    .then(response => response.json())
-    .then(data => {
-      desks = data.desks;
-      console.log(desks);
-      desks.forEach((desk) => {
-        console.log(desk);
-        let className = "seat " + desk["id"];
-        const element = document.getElementsByClassName(className)[0];
-        console.log(element);
-        element.innerHTML = "";
-        if (desk["is_used"] == 1) {
-          element.style.backgroundColor = "#ff9b7d";
-          let name = desk["name"];
-          let user = desk["user"];
-          element.innerHTML = name + "<br>" + user;
-        }
-        else {
-          element.style.backgroundColor = "#26ce00";
-          let name = desk["name"];
-          element.innerHTML = name + "<br>";
-        }
-        element.appendChild(createSeatGraphic());
+// async function populateRoom_update() {
+//   var desks;
+//   await fetch('/get_desks_data')
+//     .then(response => response.json())
+//     .then(data => {
+//       desks = data.desks;
+//       console.log(desks);
+//       desks.forEach((desk) => {
+//         console.log(desk);
+//         let className = "seat " + desk["id"];
+//         const element = document.getElementsByClassName(className)[0];
+//         console.log(element);
+//         element.innerHTML = "";
+//         if (desk["is_used"] == 1) {
+//           element.style.backgroundColor = "#ff9b7d";
+//           let name = desk["name"];
+//           let user = desk["user"];
+//           element.innerHTML = name + "<br>" + user;
+//         }
+//         else {
+//           element.style.backgroundColor = "#26ce00";
+//           let name = desk["name"];
+//           element.innerHTML = name + "<br>";
+//         }
+//         element.appendChild(createSeatGraphic());
 
-      });
+//       });
 
-    })
-    .catch(error => {
-      console.log("Keine Verbindung zum Server möglich!\n\n" + error);
-    });
-}
+//     })
+//     .catch(error => {
+//       console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+//     });
+// }
 
-function populateRoom() {
-  let mainContainer = document.getElementById("MainContainer");
-  let desks = python_desks;
-  let result = document.createElement("div");
-  result.id = "room";
+// function populateRoom() {
+//   let mainContainer = document.getElementById("MainContainer");
+//   let desks = python_desks;
+//   let result = document.createElement("div");
+//   result.id = "room";
 
-  let row = 1;
-  let column = 1;
-  let amountColumns = 2;
-  desks.forEach((desk) => {
-    let child = generate_desk_view(desk, desks.indexOf(desk));
-    child.style.gridRow = row;
-    child.style.gridColumn = column;
-    if (column % amountColumns == 0) {
-      column = 1;
-      row++;
-    } else {
-      column++;
-    }
-    result.appendChild(child);
-  });
+//   let row = 1;
+//   let column = 1;
+//   let amountColumns = 2;
+//   desks.forEach((desk) => {
+//     let child = generate_desk_view(desk, desks.indexOf(desk));
+//     child.style.gridRow = row;
+//     child.style.gridColumn = column;
+//     if (column % amountColumns == 0) {
+//       column = 1;
+//       row++;
+//     } else {
+//       column++;
+//     }
+//     result.appendChild(child);
+//   });
 
-  mainContainer.appendChild(result);
-}
+//   mainContainer.appendChild(result);
+// }
 
 function generate_desk_view(desk, i) {
   let seatDiv = document.createElement("div");
@@ -264,52 +266,54 @@ function Nav(main) {
 }
 
 function changetoAdminView() {
-  toggleNavMenu();
-  let mainContainer = document.getElementById("MainContainer");
-  mainContainer.innerHTML = "";
+  // redirect to /admin
+  window.location.href = "/admin";
+  // toggleNavMenu();
+  // let mainContainer = document.getElementById("MainContainer");
+  // mainContainer.innerHTML = "";
 
-  let adminView = document.createElement("div");
-  adminView.id = "AdminView";
-  let adminControls = document.createElement("div");
-  adminControls.id = "AdminControls";
-  let rowInput = document.createElement("input");
-  rowInput.placeholder = "Enter Rows";
-  let columnInput = document.createElement("input");
-  columnInput.placeholder = "Enter Columns";
-  let generateRoomButton = document.createElement("button");
-  generateRoomButton.textContent = "Create Room";
-  generateRoomButton.addEventListener("click", () => {
-    let rowNonNumeric = false;
-    let columnNonNumeric = false;
+  // let adminView = document.createElement("div");
+  // adminView.id = "AdminView";
+  // let adminControls = document.createElement("div");
+  // adminControls.id = "AdminControls";
+  // let rowInput = document.createElement("input");
+  // rowInput.placeholder = "Enter Rows";
+  // let columnInput = document.createElement("input");
+  // columnInput.placeholder = "Enter Columns";
+  // let generateRoomButton = document.createElement("button");
+  // generateRoomButton.textContent = "Create Room";
+  // generateRoomButton.addEventListener("click", () => {
+  //   let rowNonNumeric = false;
+  //   let columnNonNumeric = false;
 
-    if (rowInput.value == "" || columnInput.value == "") {
-      alert("At least one Value is empty.");
-      return;
-    }
+  //   if (rowInput.value == "" || columnInput.value == "") {
+  //     alert("At least one Value is empty.");
+  //     return;
+  //   }
 
-    for (const currChar of rowInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        rowNonNumeric = true;
-      }
-    }
-    for (const currChar of columnInput.value) {
-      if (currChar < "0" || currChar > "9") {
-        columnNonNumeric = true;
-      }
-    }
-    if (columnNonNumeric || rowNonNumeric) {
-      alert("Non Numeric Values detected.");
-    } else {
-      console.log("Good to go");
-    }
-  });
+  //   for (const currChar of rowInput.value) {
+  //     if (currChar < "0" || currChar > "9") {
+  //       rowNonNumeric = true;
+  //     }
+  //   }
+  //   for (const currChar of columnInput.value) {
+  //     if (currChar < "0" || currChar > "9") {
+  //       columnNonNumeric = true;
+  //     }
+  //   }
+  //   if (columnNonNumeric || rowNonNumeric) {
+  //     alert("Non Numeric Values detected.");
+  //   } else {
+  //     console.log("Good to go");
+  //   }
+  // });
 
-  adminControls.appendChild(rowInput);
-  adminControls.appendChild(columnInput);
-  adminControls.appendChild(generateRoomButton);
+  // adminControls.appendChild(rowInput);
+  // adminControls.appendChild(columnInput);
+  // adminControls.appendChild(generateRoomButton);
 
-  adminView.appendChild(adminControls);
-  mainContainer.appendChild(adminView);
+  // adminView.appendChild(adminControls);
+  // mainContainer.appendChild(adminView);
 }
 
 function toggleSeatGraphicVisibility() {
@@ -322,23 +326,74 @@ function toggleSeatGraphicVisibility() {
   }
 }
 
-// desks = python_desks_to_js();
-// Debug for Willy
-// desks = [
-//   ["1", "Desk 1", "1"],
-//   ["2", "Desk 2", "1"],
-//   ["3", "Desk 3", "0"],
-//   ["4", "Desk 4", "1"],
-//   ["5", "Desk 5", "0"],
-//   ["6", "Desk 6", "1"],
-//   ["7", "Desk 7", "0"],
-//   ["8", "Desk 8", "1"],
-//   ["9", "Desk 9", "1"],
-//   ["10", "Desk 10", "1"],
-// ];
-// populateRoom(desks);
+class GridItem {
+  constructor(x_pos, y_pos, name="", is_used=0) {
+  if (name == "") {
+    name = "POS:"+x_pos + "/" + y_pos;
+  }
+  this.x_pos = x_pos;
+  this.y_pos = y_pos;
+  this.name = name;
+  this.is_used = is_used;
+}
+}
 
-populateRoom(python_desks)
+function placeElementsInGrid(elements) {
+  const maincontainer = document.getElementById('MainContainer');
+  const gridContainer = document.createElement('div');
+  gridContainer.id='grid-container';
 
-// Alle 1 Sekunde aktualisieren
-setInterval(populateRoom_update, 1000);
+  elements.forEach(element => {
+    const gridItem = document.createElement('div');
+    gridItem.classList.add('grid-item');
+    gridItem.innerHTML = element.name + "<br>";
+    gridItem.appendChild(createSeatGraphic());
+    gridItem.style.gridRow = element.y_pos;
+    gridItem.style.gridColumn = element.x_pos;
+    gridContainer.appendChild(gridItem);
+  });
+  maincontainer.appendChild(gridContainer);
+}
+
+var elements = [];
+createGridElements();
+function createGridElements() {
+  // for each desk in python_desks create a gridItem
+  // and append it to elements
+  // elements = [];
+  python_desks.forEach(desk => {
+    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
+    elements.push(gridItem);
+  });
+};
+
+function updateGridElements() {
+  // for each desk in python_desks update the corresponding gridItem
+  // in elements
+  python_desks.forEach(desk => {
+    const gridItem = elements.find(element => element.name == desk.name);
+    gridItem.is_used = desk.is_used;
+    if (gridItem.is_used == 1) {
+      gridItem.text = desk.name + " " + desk.user;
+    }
+    else {
+      gridItem.text = desk.name;
+    }
+    console.log(gridItem);
+  });
+}
+
+async function updateData() {
+  fetch('/get_desks_data')
+    .then(response => response.json())
+    .then(data => {
+      python_desks = data.desks;
+      updateGridElements();
+    })
+    .catch(error => {
+      console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+    });
+}
+
+placeElementsInGrid(elements);
+setInterval(updateData, 1000);
