@@ -60,8 +60,8 @@ function DrawPreview() {
         desk.dataset.active = true;
         desk.dataset.x = x_index + 1;
         desk.dataset.y = y_index + 1;
-        desk.style.gridRow = x_index + 1;
-        desk.style.gridColumn = y_index + 1;
+        desk.style.gridColumn = x_index + 1;
+        desk.style.gridRow = y_index + 1;
         let setDeskName = document.createElement("input");
         desk.className = "desk " + id;
         setDeskName.value = "desk" + id;
