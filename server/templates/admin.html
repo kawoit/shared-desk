@@ -25,35 +25,43 @@
     </table>
   </div>
   <div id="addTable">
-    <h2>Add Table</h2>
+    <h2>Add Room</h2>
 
     <!-- form with input tablename, room, position -->
     <form action="/admin" method="POST">
       <label for="room">Room:</label>
-      <input type="text" id="room" name="room" value="room1" />
+      <input type="text" id="room" name="room" placeholder="Roomname" /><br />
       <label for="Dimensions">Dimensions:</label><br />
       <label>Room Height:</label>
       <input
         type="text"
         id="y_Dimensions"
         name="y_Dimensions"
-        Placeholder="y"
+        placeholder="y"
       />
       <label>Room Width:</label>
       <input
         type="text"
         id="x_Dimensions"
         name="x_Dimensions"
-        Placeholder="x"
+        placeholder="x"
       />
-      <input type="submit" value="Submit" />
+      <input id="AddNewRoomButton" type="submit" value="Submit" disabled />
     </form>
+    <div id="TablePreview"></div>
   </div>
 </div>
+
+<div id="TablePreview"></div>
 {% endblock %} {% block scripts %}
 <script>
   function toggleNavMenu() {
     window.location.href = "/";
   }
 </script>
+
+<script>
+  var python_desks = {{ desks| tojson }};
+</script>
+<script src="{{ url_for('static', filename='AdminView.js') }}"></script>
 {% endblock %}
