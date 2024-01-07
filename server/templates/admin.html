@@ -1,60 +1,54 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %} Shared Desk - Admin {% endblock %}
+{% block heading %} Admin {% endblock %} {% block content %}
+<div id="admin">
+  <div id="adminTableView">
+    {% comment %}
+    <table id="desksTable">
+      <h2>Desks</h2>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Position</th>
+      </tr>
+      {% if desks is none %}
+      <tr>
+        <td>No tables found</td>
+      </tr>
+      {% endif %} {% for desk in desks %}
+      <tr>
+        <td>{{ desk.id }}</td>
+        <td>{{ desk.name }}</td>
+        <td>{{ desk.room }}</td>
+        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endcomment %}
+  </div>
+  <div id="addTable">
+    <h2>Add Table</h2>
 
-{% block title %}
-    Shared Desk - Admin
-{% endblock %}
-
-{% block heading %}
-    Admin
-{% endblock %}
-
-{% block content %}
-    <div id="admin">
-        <div id="adminTableView">
-            <table id="desksTable">
-                <h2>Desks</h2>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Room</th>
-                    <th>Position</th>
-                </tr>
-                {% if desks is none %}
-                    <tr>
-                        <td>No tables found</td>
-                    </tr>
-                {% endif %}
-                {% for desk in desks %}
-                    <tr>
-                        <td>{{ desk.id }}</td>
-                        <td>{{ desk.name }}</td>
-                        <td>{{ desk.room }}</td>
-                        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div id="addTable">
-            <h2>Add Table</h2>
-
-            <!-- form with input tablename, room, position -->
-            <form action="/admin" method="POST">
-                <label for="tablename">Table Name:</label>
-                <input type="text" id="tablename" name="tablename" value="table1"><br>
-                <label for="room">Room:</label>
-                <input type="text" id="room" name="room" value="room1"><br>
-                <label for="position">Position:</label>
-                <input type="text" id="position" name="position" value="position1">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-    </div>
-{% endblock %}
-
-{% block scripts %}
+    <!-- form with input tablename, room, position -->
+    <form action="/admin" method="POST">
+      <label for="tablename">Table Name:</label>
+      <input type="text" id="tablename" name="tablename" value="table1" />
+      <label for="room">Room:</label>
+      <input type="text" id="room" name="room" value="room1" />
+      <label for="position">Position:</label>
+      <input type="text" id="position" name="position" value="position1" />
+      <input type="submit" value="Submit" />
+      <label for="Dimensions">Dimensions:</label><br>
+      <label >Height:</label><br>
+      <input type="text" id="y_Dimensions" name="y_Dimensions" value="y_Dimensions" />
+      <input type="text" id="x_Dimensions" name="x_Dimensions" value="x_Dimensions" />
+    </form>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
 <script>
-    function toggleNavMenu() {
-        window.location.href = "/";
-    }
-  </script>
+  function toggleNavMenu() {
+    window.location.href = "/";
+  }
+</script>
 {% endblock %}
