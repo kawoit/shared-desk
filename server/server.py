@@ -99,7 +99,7 @@ def admin():
 
 @flask_app.route("/db")
 def printDB():
-    return {"desks": database.get_desk()},200
+    return jsonify(database.get_desk()), 200
 
 
 if __name__ == "__main__":
