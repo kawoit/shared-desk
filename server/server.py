@@ -90,7 +90,7 @@ def add_desk(name):
 def admin():
     if request.method == "POST":
         print(f"add room: {request.get_json()}")
-        #server_functions.add_room(request.get_json())
+        # server_functions.add_room(request.get_json())
         return "OK", 200
     else:
         desks = process_desks()
@@ -99,7 +99,7 @@ def admin():
 
 @flask_app.route("/db")
 def printDB():
-    return jsonify(database.get_desk())
+    return {"desks": database.get_desk()},200
 
 
 if __name__ == "__main__":
