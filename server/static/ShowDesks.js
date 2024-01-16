@@ -427,7 +427,7 @@ function set_background() {
   const room_sketch = `<svg xmlns="http://www.w3.org/2000/svg" width="` + viewwidth + `" height="` + viewheight + `">
     <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="black" stroke-width="5"/>
     <rect x="0" y="140" width="50" height="100" fill="none" stroke="black" stroke-width="5"/>
-    <rect x="-1" y="140" width="50" height="100" fill="white" stroke="none" stroke-width="5"/>
+    <rect x="-1" y="140" width="50" height="100" fill="#f8d5a1" stroke="none" stroke-width="5"/>
   </svg>`;
 
   img.src = `data:image/svg+xml,${encodeURIComponent(room_sketch)}`;
