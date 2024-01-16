@@ -13,6 +13,7 @@ html {
 
 body {
   height: 100%;
+  background-image: linear-gradient(#fbe2be, #f8d5a1, white);
 }
 
 * {
