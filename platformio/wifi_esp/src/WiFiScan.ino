@@ -12,7 +12,7 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
-String serverName = "http://193.197.231.182:5000/";
+String serverName = "<SERVERURL AND PORT>";
 #define desk_id 5
 
 #define D8 (15)
