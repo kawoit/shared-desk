@@ -71,7 +71,7 @@ var desks = [];
 //   let footerDiv = document.createElement("div");
 //   footerDiv.id = "footer";
 //   footerDiv.innerHTML = "Made with <span id='heart'> &hearts;</span> by Shared Desk &copy; {% block footer %} {% endblock %}";
-  
+
 
 //   bodyElement.appendChild(footerDiv);
 // }
@@ -244,6 +244,18 @@ function Nav(main) {
   roomLabel.innerHTML = "Rooms";
   menuContainer.appendChild(roomLabel);
 
+  function updateRoomData() {
+    fetch('/get_rooms')
+      .then(response => response.json())
+      .then(data => {
+        Rooms = data;
+      })
+      .catch(error => {
+        console.log("Keine Verbindung zum Server möglich!\n\n" + error);
+      });
+  }
+  updateRoomData();
+  console.log("Rooms: " + Rooms)
   for (const room of Rooms) {
     let roomMenu = document.createElement("div");
     roomMenu.className = "menuItem";
@@ -327,26 +339,28 @@ function toggleSeatGraphicVisibility() {
 }
 
 class GridItem {
-  constructor(x_pos, y_pos, name="", is_used=0) {
-  if (name == "") {
-    name = "POS:"+x_pos + "/" + y_pos;
+  constructor(x_pos, y_pos, name = "", is_used = 0) {
+    if (name == "") {
+      name = "POS:" + x_pos + "/" + y_pos;
+    }
+    this.x_pos = x_pos;
+    this.y_pos = y_pos;
+    this.name = name;
+    this.is_used = is_used;
   }
-  this.x_pos = x_pos;
-  this.y_pos = y_pos;
-  this.name = name;
-  this.is_used = is_used;
-}
 }
 
 function placeElementsInGrid(elements) {
   const maincontainer = document.getElementById('MainContainer');
+  maincontainer.innerHTML = "";
   const gridContainer = document.createElement('div');
-  gridContainer.id='grid-container';
+  gridContainer.id = 'grid-container';
+  gridContainer.classList.add('room-bg');
 
   elements.forEach(element => {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
-    gridItem.innerHTML = element.name + "<br>";
+    gridItem.innerHTML = element.text;
     gridItem.appendChild(createSeatGraphic());
     gridItem.style.gridRow = element.y_pos;
     gridItem.style.gridColumn = element.x_pos;
@@ -368,19 +382,20 @@ function createGridElements() {
 };
 
 function updateGridElements() {
-  // for each desk in python_desks update the corresponding gridItem
-  // in elements
+  elements = [];
   python_desks.forEach(desk => {
-    const gridItem = elements.find(element => element.name == desk.name);
-    gridItem.is_used = desk.is_used;
+    const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
+    // console.log(gridItem);
     if (gridItem.is_used == 1) {
-      gridItem.text = desk.name + " " + desk.user;
+      gridItem.text = desk.user;
     }
     else {
       gridItem.text = desk.name;
     }
-    console.log(gridItem);
+    elements.push(gridItem);
   });
+  console.log(elements);
+  placeElementsInGrid(elements);
 }
 
 async function updateData() {
@@ -388,12 +403,35 @@ async function updateData() {
     .then(response => response.json())
     .then(data => {
       python_desks = data.desks;
-      updateGridElements();
     })
     .catch(error => {
       console.log("Keine Verbindung zum Server möglich!\n\n" + error);
     });
+  updateGridElements();
+  set_background();
 }
 
 placeElementsInGrid(elements);
 setInterval(updateData, 1000);
+
+
+
+const img = new Image();
+addEventListener('load', set_background);
+addEventListener('resize', set_background);
+  
+function set_background() {
+  var grid = document.getElementById('grid-container');
+  const viewwidth = grid.clientWidth;
+  const viewheight = grid.clientHeight;
+  
+  const room_sketch = `<svg xmlns="http://www.w3.org/2000/svg" width="` + viewwidth + `" height="` + viewheight + `">
+    <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="black" stroke-width="5"/>
+    <rect x="0" y="140" width="50" height="100" fill="none" stroke="black" stroke-width="5"/>
+    <rect x="-1" y="140" width="50" height="100" fill="#f8d5a1" stroke="none" stroke-width="5"/>
+  </svg>`;
+
+  img.src = `data:image/svg+xml,${encodeURIComponent(room_sketch)}`;
+  const backgroundImage = document.getElementsByClassName('room-bg')[0];
+  backgroundImage.style.backgroundImage = `url(${img.src})`;
+  }

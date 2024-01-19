@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+
+<script type="text/javascript">
+
+var formInUse = false;
+
+function setFocus()
+{
+ if(!formInUse) {
+   document.google1.q.focus();
+ }
+}
+</script>
+
+<title>MyIP.is</title>
+	<style type="text/css">
+	<!--
+	body	{ background-color:#ffffff; }
+	td		{ font-family:verdana, geneva, sans-serif; font-size: 11px; color:#666666}
+	.big	{ font-size: 24px; font-weight:bold; color:#333333}
+	.bigblue	{ font-size: 24px; font-weight:bold; color:#336699}
+	a:hover		{ color:#666666; text-decoration:underline;}
+	a	{ color:#336699; text-decoration:none}
+	-->
+	</style>
+<link rel="SHORTCUT ICON" href="favicon.ico">
+<META name="description" content="Find out your IP address and reverse DNS entry">
+<META name="keywords" content="ip, ip address, what is my ip address, find out what my ip address is, what is my current ip address, how do i find out what my ip address is, what is my public ip address, what is my external ip address, what is my ip address com, ip address what is my, linux what is my ip address, what is my tcp ip address, what is my computer's ip address, what is my internet ip address, what is my computers ip address, what is my real ip address, what is my ip address linux, how can i find out what my ip address is, what is the ip address of my computer, what is my computer ip address">
+	
+<!-- Copy-Text to Clipboard -->
+<!-- Greetings to bjarnij! -->
+<script language="Javascript">
+	function doCopy(text) {
+		holdtext.innerText = text;
+		Copied = holdtext.createTextRange();
+		Copied.execCommand("Copy");
+	}
+</script>
+</head>
+<body onload="setFocus();">
+<TEXTAREA ID="holdtext" STYLE="display:none;"></TEXTAREA>
+<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+
+<div align=center>
+<table border="0" width="100%" height="100%">
+<tr>
+	<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="700">
+	<tr>
+		<td><img src="img/logo.gif" border="0" align="left" width="165" height="71"></td>
+		<td valign=bottom align="right">
+<!-- Search Google -->
+<center>
+<table bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="left" height="32">
+</td></tr></table>
+</center>
+</td></tr>
+	<tr>
+		<td colspan="2"><table border="0" cellpadding="1" cellspacing="0" width="100%">
+		<tr>
+			<td bgcolor="#666666"><table border="0" cellpadding="0" cellspacing="20" width="100%" bgcolor="#EAEAEA">
+			<tr>
+				<td><div class="big">Your IPv6 address is:</div><br>
+				<div class="bigblue">
+				<!-- IP TALA ENG -->
+				<a href="javascript:doCopy('2001:7c0:2330:137:f816:3eff:fe0f:297f')" title="copy ip address">2001:7c0:2330:137:f816:3eff:fe0f:297f</a>
+				</div>					<div style="display: none;" id="oip"><br><hr><br>
+						<div class="big">Your IPv4 address is:</div><br>
+						<div class="bigblue">
+				<!-- IP TALA ENG -->
+				<a href="javascript:doCopy(this.innerHTML)" title="copy ip address" id="vip">-</a>
+						</div></div>
+					<div style="display: none;" id="ohost"><br>
+						<div class="big">Your IPv4 hostname is:</div><br>
+						<div class="bigblue">
+				<!-- IP TALA ENG -->
+				<a href="javascript:doCopy(this.innerHTML)" title="copy hostname" id="vhost">-</a>
+						</div></div>
+				
+				</td>
+			</tr>			
+			</table></td>
+		</tr>
+		<!--Comments and alerts -->
+
+		</table></td>
+	</tr>
+	<tr>
+		<td><br><a href="add_myip-en.html">Homepage widget</a> - <a href="https://4.myip.is">IPv4 API</a> - <a href="https://6.myip.is">IPv6 API</a><br></td>
+	<td colspan="1" align="right"><br><a href="mailto:info@myip.is"><b>info@myip.is</b></a><br>
+							      </div>
+</center>
+	</td>
+	</tr>
+
+	</table>
+	</td>
+</tr>
+</table>
+	<script>
+		const req = new XMLHttpRequest();
+req.onreadystatechange = function() {
+	if (this.readyState == 4)
+		document.getElementById("oip").style.display = "block";	
+	
+	if (this.readyState == 4 && this.status == 200) {
+		var d = JSON.parse(req.responseText);
+		document.getElementById("vip").innerHTML = d.ip;
+		if (d.host && d.host!=d.ip) {
+			document.getElementById("ohost").style.display = "block";	
+			document.getElementById("vhost").innerHTML = d.host;
+		}
+	}
+};
+req.open("GET", "https://4.myip.is/");
+req.send();
+	</script>
+</body>
+</html>
+

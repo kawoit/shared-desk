@@ -1,60 +1,82 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %} Shared Desk - Admin {% endblock %}
+{% block heading %} Admin
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+{% endblock %} {% block content %}
+<div id="admin">
+  <div id="adminTableView">
+    <table id="desksTable">
+      <h2>Desks</h2>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Position</th>
+      </tr>
+      {% if desks is none %}
+      <tr>
+        <td>No tables found</td>
+      </tr>
+      {% endif %} {% for desk in desks %}
+      <tr>
+        <td>{{ desk.id }}</td>
+        <td>{{ desk.name }}</td>
+        <td>{{ desk.room }}</td>
+        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
-{% block title %}
-    Shared Desk - Admin
-{% endblock %}
+  <h2>Add Room</h2>
 
-{% block heading %}
-    Admin
-{% endblock %}
+  <!-- form with input tablename, room, position -->
+  <form id="submitNewRoom">
+    <label for="room">Room:</label>
+    <input type="text" id="room" name="room" placeholder="Roomname" />
+    <label for="Dimensions">Dimensions:</label><br />
+    <label>Room Height:</label>
+    <input type="text" id="y_Dimensions" name="y_Dimensions" placeholder="y" />
+    <label>Room Width:</label>
+    <input
+      type="text"
+      id="x_Dimensions"
+      name="x_Dimensions"
+      placeholder="x"
+    /><br />
+    <input id="AddNewRoomButton" type="submit" value="Submit" disabled />
+  </form>
+  <div id="TablePreview"></div>
 
-{% block content %}
-    <div id="admin">
-        <div id="adminTableView">
-            <table id="desksTable">
-                <h2>Desks</h2>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Room</th>
-                    <th>Position</th>
-                </tr>
-                {% if desks is none %}
-                    <tr>
-                        <td>No tables found</td>
-                    </tr>
-                {% endif %}
-                {% for desk in desks %}
-                    <tr>
-                        <td>{{ desk.id }}</td>
-                        <td>{{ desk.name }}</td>
-                        <td>{{ desk.room }}</td>
-                        <td>{{ desk.x_pos }}/{{ desk.y_pos }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div id="addTable">
-            <h2>Add Table</h2>
-
-            <!-- form with input tablename, room, position -->
-            <form action="/admin" method="POST">
-                <label for="tablename">Table Name:</label>
-                <input type="text" id="tablename" name="tablename" value="table1"><br>
-                <label for="room">Room:</label>
-                <input type="text" id="room" name="room" value="room1"><br>
-                <label for="position">Position:</label>
-                <input type="text" id="position" name="position" value="position1">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-    </div>
-{% endblock %}
-
-{% block scripts %}
+  <h2>Add User</h2>
+  <div id="addUser">
+    <form id="submitNewUser">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Username"
+      /><br />
+      <label for="user_card_id">Card id:</label>
+      <input type="text" id="card_id" name="card_id" placeholder="Card id" />
+      <br /><input
+        id="AddNewUserButton"
+        type="submit"
+        value="Submit"
+        disabled
+      />
+    </form>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
 <script>
-    function toggleNavMenu() {
-        window.location.href = "/";
-    }
-  </script>
+  function toggleNavMenu() {
+    window.location.href = "/";
+  }
+</script>
+
+<script>
+  var python_desks = {{ desks| tojson }};
+</script>
+<script src="{{ url_for('static', filename='AdminView.js') }}"></script>
 {% endblock %}
