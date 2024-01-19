@@ -2,6 +2,8 @@ import time, re, requests
 import hashlib
 import serial
 
+SERVERURL = "http://127.0.0.1:5000"
+
 desk_id = 5
 ser = serial.Serial('/dev/ttyACM0', 9600, timeout=10)
 
@@ -29,11 +31,11 @@ def send_data(url, data):
         
 def send_to_web(card_id):
     if card_id:
-        url = f'http://193.197.231.182:5000/set_in_use'
+        url = f'{SERVERURL}/set_in_use'
         data = {'desk_id': desk_id, 'card_id': card_id}
         print("belegt")
     else:
-        url = f'http://193.197.231.182:5000/set_free'
+        url = f'{SERVERURL}//set_free'
         data = {'desk_id': desk_id}
         print("frei")
     send_data(url, data)
