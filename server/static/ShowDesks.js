@@ -385,7 +385,7 @@ function updateGridElements() {
   elements = [];
   python_desks.forEach(desk => {
     const gridItem = new GridItem(desk.x_pos, desk.y_pos, desk.name, desk.is_used);
-    console.log(gridItem);
+    // console.log(gridItem);
     if (gridItem.is_used == 1) {
       gridItem.text = desk.user;
     }
@@ -394,6 +394,7 @@ function updateGridElements() {
     }
     elements.push(gridItem);
   });
+  console.log(elements);
   placeElementsInGrid(elements);
 }
 
