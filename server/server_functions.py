@@ -108,18 +108,19 @@ class Database:
         return result
 
     def add_dummy_data(self):
-        self.run_sql_statement("DELETE FROM user")
-        self.run_sql_statement("DELETE FROM desk")
-        self.set_desk("Desk 1", "Room 1", 1, 5)
-        self.set_desk("TestDesk", "Room 1", 0, 1)
-        self.set_desk("Desk 3", "Room 1", 2, 3)
-        self.set_desk("Desk 4", "Room 1", 3, 2)
-        self.set_desk("Desk 5", "Room 1", 4, 1)
-        self.set_desk("Desk 6", "Room 1", 5, 0)
+        # self.run_sql_statement("DELETE FROM user")
+        # self.run_sql_statement("DELETE FROM desk")
+        # self.set_desk("Desk 1", "Room 1", 1, 5)
+        # self.set_desk("TestDesk", "Room 1", 0, 1)
+        # self.set_desk("Desk 3", "Room 1", 2, 3)
+        # self.set_desk("Desk 4", "Room 1", 3, 2)
+        # self.set_desk("Desk 5", "Room 1", 4, 1)
+        # self.set_desk("Desk 6", "Room 1", 5, 0)
 
-        self.set_user("Martin", "612611355")
-        self.set_user("Peter", "1371817183")
-        self.set_user("TestHandy", "199b7e00c287e47ab07f7edc345f9b5b")
+        # self.set_user("Martin", "612611355")
+        # self.set_user("Peter", "1371817183")
+        # self.set_user("TestHandy", "199b7e00c287e47ab07f7edc345f9b5b")
+        pass
 
 
 class Desk:
