@@ -4,10 +4,10 @@ This is a shared desk application developed as a university project. The applica
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+- [Setup](#setup)
 - [License](#license)
+
+# Setup
 
 ## Installation of Server Software
 
